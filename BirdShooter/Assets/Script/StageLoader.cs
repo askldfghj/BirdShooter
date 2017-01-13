@@ -31,7 +31,7 @@ public class StageLoader : MonoBehaviour {
         if (Time.time > mNextSpawn)
         {
             mNextSpawn = Time.time + mSpawnRate;
-            Instantiate(mEnemy, new Vector3(10, 2.3f, 0), transform.rotation);
+            Instantiate(mEnemy, new Vector3(10, Random.Range(0.12f,4.33f), 0), transform.rotation);
         }
     }
 }

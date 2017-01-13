@@ -20,15 +20,13 @@ public class PlayerControl : MonoBehaviour {
 
     public float mFireRate;
     private float mNextFire;
-
-    private List<GameObject> mBulletList; 
+    
 
     // Use this for initialization
 
     void Awake ()
     {
         mPlayerAni = GetComponent<Animator>();
-        mBulletList = new List<GameObject>();
     }
 	void Start ()
     {
@@ -40,7 +38,6 @@ public class PlayerControl : MonoBehaviour {
     {
         InputProgress();
         PositionFix();
-        CheckBullet();
 	}
 
     void FixedUpdate()
@@ -66,19 +63,14 @@ public class PlayerControl : MonoBehaviour {
     void PlayerShot()
     {
         mNextFire = Time.time + mFireRate;
-        GameObject bullet = Instantiate(mBullet, mSpawn.position, mSpawn.rotation) as GameObject;
-        mBulletList.Add(bullet);
+        Instantiate(mBullet, mSpawn.position, mSpawn.rotation);
     }
 
-    void CheckBullet()
+    void OnTriggerEnter2D(Collider2D other)
     {
-        for (int i = mBulletList.Count - 1; i >= 0; i--)
+        if (other.gameObject.tag == "EnemyBullet")
         {
-            if (mBulletList[i].transform.position.x > 10)
-            {
-                Destroy(mBulletList[i]);
-                mBulletList.RemoveAt(i);
-            }
+            PlayerHit();
         }
     }
 

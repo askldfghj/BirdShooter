@@ -8,16 +8,15 @@ public class EnemyControl : MonoBehaviour {
     public GameObject mBullet;
     public Transform mSpawn;
 
+
     public float mSpeed;
 
     public float mFireRate;
     private float mNextFire;
 
-    private List<GameObject> mBulletList;
-
     void Awake()
     {
-        mBulletList = new List<GameObject>();
+        
     }
 	// Use this for initialization
 	void Start ()
@@ -29,19 +28,16 @@ public class EnemyControl : MonoBehaviour {
 	void Update ()
     {
         EnemyMove();
-        CheckBullet();
         ShootBullet();
-	}
+        CheckPosi();
+    }
 
-    void CheckBullet()
+
+    void CheckPosi()
     {
-        for (int i = mBulletList.Count - 1; i >= 0; i--)
+        if (transform.position.x < 0)
         {
-            if (mBulletList[i].transform.position.x < 0)
-            {
-                Destroy(mBulletList[i]);
-                mBulletList.RemoveAt(i);
-            }
+            Destroy(gameObject);
         }
     }
 
@@ -55,8 +51,17 @@ public class EnemyControl : MonoBehaviour {
         if (Time.time > mNextFire)
         {
             mNextFire = Time.time + mFireRate;
-            GameObject bullet = Instantiate(mBullet, mSpawn.position, mSpawn.rotation) as GameObject;
-            mBulletList.Add(bullet);
+            Instantiate(mBullet, mSpawn.position, mSpawn.rotation);
+        }
+    }
+
+    
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "PlayerBullet")
+        {
+            //Destroy(this);
         }
     }
 }

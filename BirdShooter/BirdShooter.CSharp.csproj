@@ -69,8 +69,9 @@
     <Compile Include="Assets\Script\BulletControl.cs" />
     <Compile Include="Assets\Script\E_BulletControl.cs" />
     <Compile Include="Assets\Script\EnemyControl.cs" />
+    <Compile Include="Assets\Script\EnemyDownAni.cs" />
     <Compile Include="Assets\Script\PlayerControl.cs" />
-    <Compile Include="Assets\StageLoader.cs" />
+    <Compile Include="Assets\Script\StageLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Sprite Pack\Tap and Fly\Readme.txt" />
