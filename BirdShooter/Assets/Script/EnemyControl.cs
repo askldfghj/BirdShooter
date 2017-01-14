@@ -4,34 +4,45 @@ using System.Collections.Generic;
 
 public class EnemyControl : MonoBehaviour {
 
+    BoxCollider2D mBox2d;
+    Animator mEnemyAni;
+    float mNextFire;
 
-    public GameObject mBullet;
-    public Transform mSpawn;
+    public GameObject mItem;
 
-
-    public float mSpeed;
-
-    public float mFireRate;
-    private float mNextFire;
+    public ObjectBasicInfo mInfo;
+    
 
     void Awake()
     {
-        
+        mNextFire = 0;
+        mEnemyAni = GetComponent<Animator>();
+        mBox2d = GetComponent<BoxCollider2D>();
     }
 	// Use this for initialization
 	void Start ()
     {
-	
+        
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        EnemyMove();
-        ShootBullet();
+        EnemyMove(); //공통아님
+        ShootBullet(); //공통아님
         CheckPosi();
     }
 
+    void FixedUpdate()
+    {
+        if (mInfo.Health <= 0)
+        {
+            EnemyDown();
+            mBox2d.enabled = false;
+            Destroy(gameObject, 0.125f);
+            Destroy(this);
+        }
+    }
 
     void CheckPosi()
     {
@@ -43,25 +54,34 @@ public class EnemyControl : MonoBehaviour {
 
     void EnemyMove()
     {
-        transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
+        transform.Translate(Vector3.left * mInfo.Speed * Time.deltaTime);
+    }
+
+    void CreateItem()
+    {
+        if (Random.Range(0f, 1f) > 0.7f)
+        {
+            Instantiate(mItem, transform.position, transform.rotation);
+        }
     }
 
     void ShootBullet()
     {
         if (Time.time > mNextFire)
         {
-            mNextFire = Time.time + mFireRate;
-            Instantiate(mBullet, mSpawn.position, mSpawn.rotation);
+            mNextFire = Time.time + mInfo.FireRate;
+            Instantiate(mInfo.BulletObj, mInfo.SpawnTransf.position, mInfo.SpawnTransf.rotation);
         }
     }
 
-    
-
-    void OnTriggerEnter2D(Collider2D other)
+    void Damaged(int dam)
     {
-        if (other.gameObject.tag == "PlayerBullet")
-        {
-            //Destroy(this);
-        }
+        mInfo.Health -= dam;
+    }
+
+    void EnemyDown()
+    {
+        CreateItem();
+        mEnemyAni.SetTrigger("EnemyDestroy");
     }
 }

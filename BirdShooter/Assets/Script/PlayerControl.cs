@@ -10,22 +10,21 @@ public class Boundary
 
 public class PlayerControl : MonoBehaviour {
 
-    public GameObject mBullet;
-    public Transform mSpawn;
-
     public Boundary mBoundary;
+    public ObjectBasicInfo mInfo;
     Animator mPlayerAni;
-    
-    public float mSpeed;
-
-    public float mFireRate;
-    private float mNextFire;
+    float mNextFire;
+    int mDamage;
+    int mPowerIndex;
     
 
     // Use this for initialization
 
     void Awake ()
     {
+        mNextFire = 0;
+        mPowerIndex = 0;
+        mDamage = 1;
         mPlayerAni = GetComponent<Animator>();
     }
 	void Start ()
@@ -45,6 +44,16 @@ public class PlayerControl : MonoBehaviour {
         
     }
 
+    void PowerUp()
+    {
+        mPowerIndex++;
+        if (mPowerIndex > 3)
+        {
+            mPowerIndex = 3;
+        }
+        mDamage = mPowerIndex + 1;
+    }
+
     void PositionFix()
     {
         transform.position = new Vector3
@@ -62,8 +71,13 @@ public class PlayerControl : MonoBehaviour {
 
     void PlayerShot()
     {
-        mNextFire = Time.time + mFireRate;
-        Instantiate(mBullet, mSpawn.position, mSpawn.rotation);
+        mNextFire = Time.time + mInfo.FireRate;
+        GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf.position, mInfo.SpawnTransf.rotation)
+                            as GameObject;
+        BulletControl bc = bullet.GetComponent<BulletControl>();
+        bc.SetBulletInfo(mPowerIndex, mDamage);
+
+
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -78,19 +92,19 @@ public class PlayerControl : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
+            transform.Translate(Vector3.left * mInfo.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
+            transform.Translate(Vector3.right * mInfo.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector3.up * mSpeed * Time.deltaTime);
+            transform.Translate(Vector3.up * mInfo.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(Vector3.down * mSpeed * Time.deltaTime);
+            transform.Translate(Vector3.down * mInfo.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.Z) && Time.time > mNextFire)
         {

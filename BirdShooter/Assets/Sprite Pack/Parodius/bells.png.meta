@@ -1,28 +1,33 @@
 fileFormatVersion: 2
-guid: 4c4acc222e5b715468e7e9056cfc4ce2
-timeCreated: 1484363589
+guid: 5aadaf49b9caefb45af79a1c229b625e
+timeCreated: 1484372789
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Bullet1
-    21300002: Bullet2
-    21300004: Bullet3
-    21300006: Bullet4
-    21300008: BulletEp1
-    21300010: BulletEp2
-    21300012: BulletEp3
-    21300014: BulletEp4
-    21300016: TargetEp1
-    21300018: TargetEp2
-    21300020: TargetEp3
-    21300022: E_Bullet1
-    21300024: E_Bullet2
-    21300026: E_Bullet3
-    21300028: E_Bullet4
-    21300030: GreenBulletEp1
-    21300032: GreenBulletEp2
-    21300034: GreenBulletEp3
-    21300036: GreenBulletEp4
+    21300000: bells_0
+    21300002: bells_1
+    21300004: bells_2
+    21300006: bells_3
+    21300008: bells_4
+    21300010: bells_5
+    21300012: bells_6
+    21300014: bells_7
+    21300016: bells_8
+    21300018: bells_9
+    21300020: bells_10
+    21300022: bells_11
+    21300024: bells_12
+    21300026: bells_13
+    21300028: bells_14
+    21300030: bells_15
+    21300032: bells_16
+    21300034: bells_17
+    21300036: bells_18
+    21300038: bells_19
+    21300040: bells_20
+    21300042: bells_21
+    21300044: bells_22
+    21300046: bells_23
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -48,7 +53,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -72,247 +77,312 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bullet1
+      name: bells_0
       rect:
         serializedVersion: 2
-        x: 210
-        y: 299
-        width: 14
-        height: 14
+        x: 0
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bullet2
+      name: bells_1
       rect:
         serializedVersion: 2
-        x: 228
-        y: 299
-        width: 17
-        height: 15
+        x: 16
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bullet3
+      name: bells_2
       rect:
         serializedVersion: 2
-        x: 249
-        y: 299
-        width: 20
-        height: 14
+        x: 32
+        y: 112
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Bullet4
+      name: bells_3
       rect:
         serializedVersion: 2
-        x: 273
-        y: 301
-        width: 24
-        height: 12
+        x: 0
+        y: 96
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletEp1
+      name: bells_4
       rect:
         serializedVersion: 2
-        x: 311
-        y: 304
-        width: 5
-        height: 6
+        x: 16
+        y: 96
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletEp2
+      name: bells_5
       rect:
         serializedVersion: 2
-        x: 317
-        y: 305
-        width: 5
-        height: 5
+        x: 32
+        y: 96
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletEp3
+      name: bells_6
       rect:
         serializedVersion: 2
-        x: 324
-        y: 304
-        width: 7
-        height: 7
+        x: 0
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: BulletEp4
+      name: bells_7
       rect:
         serializedVersion: 2
-        x: 333
-        y: 304
-        width: 9
-        height: 7
+        x: 16
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TargetEp1
+      name: bells_8
       rect:
         serializedVersion: 2
-        x: 416
-        y: 149
-        width: 22
-        height: 21
+        x: 32
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TargetEp2
+      name: bells_9
       rect:
         serializedVersion: 2
-        x: 420
-        y: 115
-        width: 14
-        height: 30
+        x: 0
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TargetEp3
+      name: bells_10
       rect:
         serializedVersion: 2
-        x: 420
-        y: 65
-        width: 14
-        height: 43
+        x: 16
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: E_Bullet1
+      name: bells_11
       rect:
         serializedVersion: 2
-        x: 13
-        y: 321
-        width: 6
-        height: 10
+        x: 32
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: E_Bullet2
+      name: bells_12
       rect:
         serializedVersion: 2
-        x: 21
-        y: 323
-        width: 10
-        height: 6
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: E_Bullet3
+      name: bells_13
       rect:
         serializedVersion: 2
-        x: 33
-        y: 321
-        width: 9
-        height: 9
+        x: 16
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: E_Bullet4
+      name: bells_14
       rect:
         serializedVersion: 2
-        x: 44
-        y: 321
-        width: 9
-        height: 9
+        x: 32
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: GreenBulletEp1
+      name: bells_15
       rect:
         serializedVersion: 2
-        x: 312
-        y: 327
-        width: 3
-        height: 3
+        x: 0
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: GreenBulletEp2
+      name: bells_16
       rect:
         serializedVersion: 2
-        x: 317
-        y: 326
-        width: 5
-        height: 5
+        x: 16
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: GreenBulletEp3
+      name: bells_17
       rect:
         serializedVersion: 2
-        x: 324
-        y: 325
-        width: 7
-        height: 7
+        x: 32
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: GreenBulletEp4
+      name: bells_18
       rect:
         serializedVersion: 2
-        x: 334
-        y: 325
-        width: 7
-        height: 7
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bells_19
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bells_20
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bells_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bells_22
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: bells_23
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

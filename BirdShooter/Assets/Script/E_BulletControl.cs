@@ -5,9 +5,16 @@ public class E_BulletControl : MonoBehaviour {
 
     public float mSpeed;
 
+    public Sprite mSpr;
+
+    Animator mAni;
+
+    bool mIsHit;
+
     void Awake()
     {
-
+        mIsHit = false;
+        mAni = GetComponent<Animator>();
     }
 
 	// Use this for initialization
@@ -18,8 +25,11 @@ public class E_BulletControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
-        CheckPosi();
+        if (!mIsHit)
+        {
+            transform.Translate(Vector3.left * mSpeed * Time.deltaTime);
+            CheckPosi();
+        }
     }
 
     void CheckPosi()
@@ -34,7 +44,10 @@ public class E_BulletControl : MonoBehaviour {
     {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            mIsHit = true;
+            mAni.Stop();
+            gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
+            Destroy(gameObject, 0.1f);
         }
     }
 }
