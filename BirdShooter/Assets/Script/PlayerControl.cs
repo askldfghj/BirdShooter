@@ -76,8 +76,6 @@ public class PlayerControl : MonoBehaviour {
                             as GameObject;
         BulletControl bc = bullet.GetComponent<BulletControl>();
         bc.SetBulletInfo(mPowerIndex, mDamage);
-
-
     }
 
     void OnTriggerEnter2D(Collider2D other)

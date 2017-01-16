@@ -51,6 +51,7 @@ public class EnemyControl : MonoBehaviour {
             Destroy(gameObject);
         }
     }
+    
 
     void EnemyMove()
     {
@@ -78,6 +79,7 @@ public class EnemyControl : MonoBehaviour {
     {
         mInfo.Health -= dam;
     }
+
 
     void EnemyDown()
     {

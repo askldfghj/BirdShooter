@@ -6,12 +6,12 @@ public class StageLoader : MonoBehaviour {
 
     public float mSpawnRate;
     private float mNextSpawn;
-
+    
     public GameObject mEnemy;
 
     void Awake()
     {
-
+        
     }
 
 	// Use this for initialization
@@ -31,7 +31,7 @@ public class StageLoader : MonoBehaviour {
         if (Time.time > mNextSpawn)
         {
             mNextSpawn = Time.time + mSpawnRate;
-            Instantiate(mEnemy, new Vector3(10, Random.Range(0.12f,4.33f), 0), transform.rotation);
+            Instantiate(mEnemy, new Vector3(10, Random.Range(0.12f, 4.33f), 0), transform.rotation);
         }
     }
 }
