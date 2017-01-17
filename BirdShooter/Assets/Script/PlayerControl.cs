@@ -14,8 +14,13 @@ public class PlayerControl : MonoBehaviour {
     public ObjectBasicInfo mInfo;
     Animator mPlayerAni;
     float mNextFire;
+    float mNextChase;
     int mDamage;
     int mPowerIndex;
+
+    public float mChaseBulletRate;
+
+    public GameObject mChaseBullet;
     
 
     // Use this for initialization
@@ -72,10 +77,19 @@ public class PlayerControl : MonoBehaviour {
     void PlayerShot()
     {
         mNextFire = Time.time + mInfo.FireRate;
-        GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf.position, mInfo.SpawnTransf.rotation)
+        GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
                             as GameObject;
         BulletControl bc = bullet.GetComponent<BulletControl>();
         bc.SetBulletInfo(mPowerIndex, mDamage);
+
+        
+    }
+
+    void PlayerChaseShot()
+    {
+        mNextChase = Time.time + mChaseBulletRate;
+        Instantiate(mChaseBullet, mInfo.SpawnTransf[1].position, mInfo.SpawnTransf[1].rotation);
+        Instantiate(mChaseBullet, mInfo.SpawnTransf[2].position, mInfo.SpawnTransf[2].rotation);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -104,9 +118,16 @@ public class PlayerControl : MonoBehaviour {
         {
             transform.Translate(Vector3.down * mInfo.Speed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.Z) && Time.time > mNextFire)
+        if (Input.GetKey(KeyCode.Z))
         {
-            PlayerShot();
+            if (Time.time > mNextFire)
+            {
+                PlayerShot();
+            }
+            if (Time.time > mNextChase)
+            {
+                PlayerChaseShot();
+            }
         }
     }
 }

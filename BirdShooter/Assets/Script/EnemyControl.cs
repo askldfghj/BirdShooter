@@ -71,7 +71,7 @@ public class EnemyControl : MonoBehaviour {
         if (Time.time > mNextFire)
         {
             mNextFire = Time.time + mInfo.FireRate;
-            Instantiate(mInfo.BulletObj, mInfo.SpawnTransf.position, mInfo.SpawnTransf.rotation);
+            Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation);
         }
     }
 

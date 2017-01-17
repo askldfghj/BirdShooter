@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4c4acc222e5b715468e7e9056cfc4ce2
-timeCreated: 1484363589
+timeCreated: 1484630873
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -23,6 +23,10 @@ TextureImporter:
     21300032: GreenBulletEp2
     21300034: GreenBulletEp3
     21300036: GreenBulletEp4
+    21300038: PlayerChaseB_1
+    21300040: PlayerChaseB_2
+    21300042: PlayerChaseB_3
+    21300044: PlayerChaseB_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -313,6 +317,58 @@ TextureImporter:
         y: 325
         width: 7
         height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerChaseB_1
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 303
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerChaseB_2
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 305
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerChaseB_3
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 303
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: PlayerChaseB_4
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 303
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -12,11 +12,9 @@ public class BulletControl : MonoBehaviour {
     
     int mDamage;
     int mPowerIndex;
-    bool mIsHit;
 
     void Awake()
     {
-        mIsHit = false;
         mPowerIndex = 0;
         mDamage = 1;
     }
@@ -30,11 +28,8 @@ public class BulletControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (!mIsHit)
-        {
-            transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
-            CheckPosi();
-        }
+        transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
+        CheckPosi();
     }
 
     public void SetBulletInfo(int index, int damage)
@@ -56,9 +51,9 @@ public class BulletControl : MonoBehaviour {
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.SendMessage("Damaged", mDamage);
-            mIsHit = true;
             gameObject.GetComponent<SpriteRenderer>().sprite = mBulletEpSprite[mPowerIndex];
             Destroy(gameObject, 0.1f);
+            Destroy(this);
         }
     }
 }
