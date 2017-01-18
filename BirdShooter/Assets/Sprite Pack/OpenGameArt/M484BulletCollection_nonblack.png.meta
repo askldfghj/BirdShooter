@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4c4acc222e5b715468e7e9056cfc4ce2
-timeCreated: 1484630873
+timeCreated: 1484729767
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -27,6 +27,10 @@ TextureImporter:
     21300040: PlayerChaseB_2
     21300042: PlayerChaseB_3
     21300044: PlayerChaseB_4
+    21300046: P_LaserBody
+    21300048: P_LaserHead
+    21300050: P_LaserTail
+    21300052: lasertest
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -369,6 +373,45 @@ TextureImporter:
         y: 303
         width: 9
         height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: P_LaserHead
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 293
+        width: 13
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: P_LaserTail
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 303
+        width: 13
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: P_LaserBody
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 227
+        width: 13
+        height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

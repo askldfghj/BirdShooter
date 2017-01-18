@@ -4,13 +4,12 @@ using System.Collections;
 public class BulletControl : MonoBehaviour {
 
     public float mSpeed;
-    public Sprite mSpr;
 
     public Sprite[] mBulletSprite;
     public Sprite[] mBulletEpSprite;
 
     
-    int mDamage;
+    float mDamage;
     int mPowerIndex;
 
     void Awake()
@@ -32,7 +31,7 @@ public class BulletControl : MonoBehaviour {
         CheckPosi();
     }
 
-    public void SetBulletInfo(int index, int damage)
+    public void SetBulletInfo(int index, float damage)
     {
         mPowerIndex = index;
         mDamage = damage;

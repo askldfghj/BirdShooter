@@ -7,5 +7,5 @@ public class ObjectBasicInfo  {
     public Transform[] SpawnTransf;
     public float Speed;
     public float FireRate;
-    public int Health;
+    public float Health;
 }

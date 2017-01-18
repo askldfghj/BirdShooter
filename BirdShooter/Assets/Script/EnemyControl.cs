@@ -75,7 +75,7 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
-    void Damaged(int dam)
+    void Damaged(float dam)
     {
         mInfo.Health -= dam;
     }

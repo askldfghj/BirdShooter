@@ -15,38 +15,56 @@ public class PlayerControl : MonoBehaviour {
     Animator mPlayerAni;
     float mNextFire;
     float mNextChase;
-    int mDamage;
+    float mNextLaser;
+    float mDamage;
     int mPowerIndex;
 
     public float mChaseBulletRate;
+    public float mLaserRate;
 
     public GameObject mChaseBullet;
-    
+    public GameObject[] mLaser;
 
     // Use this for initialization
 
-    void Awake ()
+    bool mIsShootHead;
+
+    void Awake()
     {
         mNextFire = 0;
+        mNextLaser = 0;
         mPowerIndex = 0;
+        mIsShootHead = false;
         mDamage = 1;
         mPlayerAni = GetComponent<Animator>();
     }
-	void Start ()
+    void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         InputProgress();
         PositionFix();
-	}
+
+        //if (Physics2D.Raycast(transform.position, transform.right, out hit))
+        //{
+        //    Debug.Log(hit.transform.tag);
+        //    switch (hit.transform.tag)
+        //    {
+        //        case "Enemy":
+        //            //Output message
+        //            Debug.Log("Enemy detected");
+        //            break;
+        //    }
+        //}
+    }
 
     void FixedUpdate()
     {
-        
+
     }
 
     void PowerUp()
@@ -82,7 +100,7 @@ public class PlayerControl : MonoBehaviour {
         BulletControl bc = bullet.GetComponent<BulletControl>();
         bc.SetBulletInfo(mPowerIndex, mDamage);
 
-        
+
     }
 
     void PlayerChaseShot()
@@ -90,6 +108,22 @@ public class PlayerControl : MonoBehaviour {
         mNextChase = Time.time + mChaseBulletRate;
         Instantiate(mChaseBullet, mInfo.SpawnTransf[1].position, mInfo.SpawnTransf[1].rotation);
         Instantiate(mChaseBullet, mInfo.SpawnTransf[2].position, mInfo.SpawnTransf[2].rotation);
+    }
+
+    void PlayerLaserShot()
+    {
+        mNextLaser = Time.time + mLaserRate;
+        Instantiate(mLaser[1], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
+    }
+    void PlayerLaserShotHead()
+    {
+        mIsShootHead = true;
+        Instantiate(mLaser[2], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
+    }
+    void PlayerLaserShotTail()
+    {
+        mIsShootHead = false;
+        Instantiate(mLaser[0], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -122,12 +156,24 @@ public class PlayerControl : MonoBehaviour {
         {
             if (Time.time > mNextFire)
             {
-                PlayerShot();
+                //PlayerShot();
             }
             if (Time.time > mNextChase)
             {
                 PlayerChaseShot();
             }
+            if (Time.time > mNextLaser && mIsShootHead)
+            {
+                PlayerLaserShot();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            PlayerLaserShotHead();    
+        }
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            PlayerLaserShotTail();
         }
     }
 }

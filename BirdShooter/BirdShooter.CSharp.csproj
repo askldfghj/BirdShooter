@@ -66,15 +66,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BGControl.cs" />
-    <Compile Include="Assets\P_ChaseBulletControl.cs" />
+    <Compile Include="Assets\P_LaserBulletControl.cs" />
+    <Compile Include="Assets\Script\BGControl.cs" />
     <Compile Include="Assets\Script\BulletControl.cs" />
     <Compile Include="Assets\Script\E_BulletControl.cs" />
     <Compile Include="Assets\Script\EnemyControl.cs" />
     <Compile Include="Assets\Script\ItemControl.cs" />
     <Compile Include="Assets\Script\ObjectBasicInfo.cs" />
+    <Compile Include="Assets\Script\P_ChaseBulletControl.cs" />
     <Compile Include="Assets\Script\PlayerControl.cs" />
     <Compile Include="Assets\Script\StageLoader.cs" />
+    <Compile Include="Assets\linerend.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Sprite Pack\Tap and Fly\Readme.txt" />
