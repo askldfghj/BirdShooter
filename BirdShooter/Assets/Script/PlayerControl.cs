@@ -25,6 +25,8 @@ public class PlayerControl : MonoBehaviour {
     public GameObject mChaseBullet;
     public GameObject[] mLaser;
 
+    GameObject mLineLaser;
+
     // Use this for initialization
 
     bool mIsShootHead;
@@ -95,13 +97,25 @@ public class PlayerControl : MonoBehaviour {
     void PlayerShot()
     {
         mNextFire = Time.time + mInfo.FireRate;
-        GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
+        //GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
+        //                    as GameObject;
+        //BulletControl bc = bullet.GetComponent<BulletControl>();
+        //bc.SetBulletInfo(mPowerIndex, mDamage);
+        mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
                             as GameObject;
-        BulletControl bc = bullet.GetComponent<BulletControl>();
-        bc.SetBulletInfo(mPowerIndex, mDamage);
-
-
     }
+
+    void TestKeyDown()
+    {
+        mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
+                            as GameObject;
+    }
+
+    void TestKeyUp()
+    {
+        Destroy(mLineLaser);
+    }
+
 
     void PlayerChaseShot()
     {
@@ -160,20 +174,22 @@ public class PlayerControl : MonoBehaviour {
             }
             if (Time.time > mNextChase)
             {
-                PlayerChaseShot();
+                //PlayerChaseShot();
             }
             if (Time.time > mNextLaser && mIsShootHead)
             {
-                PlayerLaserShot();
+                //PlayerLaserShot();
             }
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            PlayerLaserShotHead();    
+            //PlayerLaserShotHead();
+            TestKeyDown(); 
         }
         if (Input.GetKeyUp(KeyCode.Z))
         {
-            PlayerLaserShotTail();
+            //PlayerLaserShotTail();
+            TestKeyUp();
         }
     }
 }
