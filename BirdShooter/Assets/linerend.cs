@@ -9,10 +9,13 @@ public class linerend : MonoBehaviour {
     Vector3 distance;
     RaycastHit2D hit;
     GameObject mPlayer;
+    int mLayerMask;
+    
     // Use this for initialization
 
     void Awake()
     {
+        mLayerMask = 1 << 8;
         mPlayer = GameObject.Find("BulletSpawn");
     }
 
@@ -29,21 +32,25 @@ public class linerend : MonoBehaviour {
         end = transform.position + distance;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        //transform.Translate(Vector3.right * Time.deltaTime * 6f);
+        transform.Translate(Vector3.right * Time.deltaTime * 6f);
         //hit = Physics2D.BoxCast(start, new Vector3(3,3), 0f, transform.right, Vector2.Distance(start,end));
-        hit = Physics2D.Raycast(start, Vector2.right, 10f);
+        hit = Physics2D.Raycast(start, Vector2.right, 10f, mLayerMask);
         distance = new Vector2(10, 0);
         if (hit.collider != null)
         {
             if (hit.transform.tag == "Enemy")
             {
                 distance = new Vector2(hit.distance, 0);
+                Debug.Log("right");
+            }
+            else
+            {
+                Debug.Log("not");
             }
         }
         start = mPlayer.transform.position;
