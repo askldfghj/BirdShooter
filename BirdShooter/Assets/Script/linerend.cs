@@ -46,11 +46,7 @@ public class linerend : MonoBehaviour {
             if (hit.transform.tag == "Enemy")
             {
                 distance = new Vector2(hit.distance, 0);
-                Debug.Log("right");
-            }
-            else
-            {
-                Debug.Log("not");
+                hit.collider.SendMessage("Damaged", 0.1f);
             }
         }
         start = mPlayer.transform.position;
