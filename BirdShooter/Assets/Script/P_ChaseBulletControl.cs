@@ -2,17 +2,14 @@
 using System.Collections;
 
 public class P_ChaseBulletControl : MonoBehaviour {
-
-    float mEjectSpeed;
-    public float mSpeed;
-    public float mRotateSpeed;
-    public float mTracking;
+    
 
     public Sprite mSpr;
 
+    public ChaseBulletObjStruct mInfos;
+
     Animator mAni;
     float mTrackTime;
-    int mDamage;
     bool mIsNoEnemy;
     bool mIsEjectd;
     Transform mTargetParent;
@@ -22,12 +19,10 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     void Awake()
     {
-        mEjectSpeed = 1f;
         mIsNoEnemy = true;
         mIsEjectd = false;
         mTrackTime = Time.time;
         mAni = GetComponent<Animator>();
-        mDamage = 1;
         mTargetParent = GameObject.Find("EnemySpawnParent").transform;
     }
     void Start () {
@@ -36,29 +31,8 @@ public class P_ChaseBulletControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!mIsEjectd)
-        {
-            transform.Translate(Vector2.right * mEjectSpeed * Time.deltaTime);
-        }
-        else
-        {
-            transform.Translate(Vector2.right * mSpeed * Time.deltaTime);
-        }
-        if (mTarget == null)
-        {
-            mIsNoEnemy = SearchTarget();
-        }
-        if (Time.time - mTrackTime >= mTracking && !mIsNoEnemy) // 트래킹할 시간이 됐는지 체크한다.
-        {
-            mIsEjectd = true;
-            Vector2 dir = mTarget.position - transform.position; // 유도탄과 타겟 사이의 벡터값 구하기
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // 2D 각도값 구하기
-            Quaternion tarRot = Quaternion.AngleAxis(angle, Vector3.forward); // 얻어진 2D 좌표계 각도를 Quaternion으로 변환한다.
-            transform.rotation = Quaternion.Slerp(transform.rotation, tarRot, mRotateSpeed * Time.deltaTime); // 목표 각도로 서서히 이동시킨다.
-
-            if (transform.rotation == tarRot) mTrackTime = Time.time; // 목표각도까지 회전했으면 타이머를 리셋한다.
-        }
-
+        BulletSpeedTrigger();
+        ChaseFunction();
         CheckPosi();
     }
 
@@ -77,7 +51,44 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     void CheckPosi()
     {
-        if (transform.position.x > 10)
+        if (transform.position.x < mInfos.Bound.xMin ||
+            transform.position.x > mInfos.Bound.xMax ||
+            transform.position.y < mInfos.Bound.yMin ||
+            transform.position.y > mInfos.Bound.yMax)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void BulletSpeedTrigger()
+    {
+        if (!mIsEjectd)
+        {
+            transform.Translate(Vector2.right * mInfos.EjectSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector2.right * mInfos.Speed * Time.deltaTime);
+        }
+    }
+
+    void ChaseFunction()
+    {
+        if (mTarget == null)
+        {
+            mIsNoEnemy = SearchTarget();
+        }
+        if (Time.time - mTrackTime >= mInfos.Tracking && !mIsNoEnemy) // 트래킹할 시간이 됐는지 체크한다.
+        {
+            mIsEjectd = true;
+            Vector2 dir = mTarget.position - transform.position; // 유도탄과 타겟 사이의 벡터값 구하기
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // 2D 각도값 구하기
+            Quaternion tarRot = Quaternion.AngleAxis(angle, Vector3.forward); // 얻어진 2D 좌표계 각도를 Quaternion으로 변환한다.
+            transform.rotation = Quaternion.Slerp(transform.rotation, tarRot, mInfos.RotateSpeed * Time.deltaTime); // 목표 각도로 서서히 이동시킨다.
+
+            if (transform.rotation == tarRot) mTrackTime = Time.time; // 목표각도까지 회전했으면 타이머를 리셋한다.
+        }
+        if (mTarget == null && Time.time - mTrackTime > 1.5)
         {
             Destroy(gameObject);
         }
@@ -87,7 +98,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy")
         {
-            other.gameObject.SendMessage("Damaged", mDamage);
+            other.gameObject.SendMessage("Damaged", mInfos.Damage);
             mAni.Stop();
             gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
             Destroy(gameObject, 0.1f);

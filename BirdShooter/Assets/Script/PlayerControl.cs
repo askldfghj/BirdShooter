@@ -2,30 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class Boundary
-{
-    public float xMin, xMax, yMin, yMax;
-}
-
 public class PlayerControl : MonoBehaviour {
 
     public Boundary mBoundary;
-    public ObjectBasicInfo mInfo;
     Animator mPlayerAni;
     float mNextFire;
     float mNextChase;
     float mNextLaser;
-    float mDamage;
     int mPowerIndex;
 
-    public float mChaseBulletRate;
-    public float mLaserRate;
-
-    public GameObject mChaseBullet;
-    public GameObject[] mLaser;
-
-    GameObject mLineLaser;
+    public PlayerObjStruct mInfos;
 
     // Use this for initialization
 
@@ -37,7 +23,6 @@ public class PlayerControl : MonoBehaviour {
         mNextLaser = 0;
         mPowerIndex = 0;
         mIsShootHead = false;
-        mDamage = 1;
         mPlayerAni = GetComponent<Animator>();
     }
     void Start()
@@ -50,18 +35,6 @@ public class PlayerControl : MonoBehaviour {
     {
         InputProgress();
         PositionFix();
-
-        //if (Physics2D.Raycast(transform.position, transform.right, out hit))
-        //{
-        //    Debug.Log(hit.transform.tag);
-        //    switch (hit.transform.tag)
-        //    {
-        //        case "Enemy":
-        //            //Output message
-        //            Debug.Log("Enemy detected");
-        //            break;
-        //    }
-        //}
     }
 
     void FixedUpdate()
@@ -76,7 +49,6 @@ public class PlayerControl : MonoBehaviour {
         {
             mPowerIndex = 3;
         }
-        mDamage = mPowerIndex + 1;
     }
 
     void PositionFix()
@@ -96,48 +68,45 @@ public class PlayerControl : MonoBehaviour {
 
     void PlayerShot()
     {
-        mNextFire = Time.time + mInfo.FireRate;
-        //GameObject bullet = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
-        //                    as GameObject;
-        //BulletControl bc = bullet.GetComponent<BulletControl>();
-        //bc.SetBulletInfo(mPowerIndex, mDamage);
-        mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
+        mNextFire = Time.time + mInfos.BasicBullet[mPowerIndex].FireRate;
+        GameObject bullet = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet, 
+                                        mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
                             as GameObject;
     }
 
     void TestKeyDown()
     {
-        mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
-                            as GameObject;
+        //mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
+        //                    as GameObject;
     }
 
     void TestKeyUp()
     {
-        Destroy(mLineLaser);
+        //Destroy(mLineLaser);
     }
 
 
     void PlayerChaseShot()
     {
-        mNextChase = Time.time + mChaseBulletRate;
-        Instantiate(mChaseBullet, mInfo.SpawnTransf[1].position, mInfo.SpawnTransf[1].rotation);
-        Instantiate(mChaseBullet, mInfo.SpawnTransf[2].position, mInfo.SpawnTransf[2].rotation);
+        mNextChase = Time.time + mInfos.ChaseBullet.FireRate;
+        Instantiate(mInfos.ChaseBullet.Bullet, mInfos.SpawnTransf[1].position, mInfos.SpawnTransf[1].rotation);
+        Instantiate(mInfos.ChaseBullet.Bullet, mInfos.SpawnTransf[2].position, mInfos.SpawnTransf[2].rotation);
     }
 
     void PlayerLaserShot()
     {
-        mNextLaser = Time.time + mLaserRate;
-        Instantiate(mLaser[1], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
+        //mNextLaser = Time.time + mLaserRate;
+        //Instantiate(mLaser[1], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
     }
     void PlayerLaserShotHead()
     {
-        mIsShootHead = true;
-        Instantiate(mLaser[2], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
+        //mIsShootHead = true;
+        //Instantiate(mLaser[2], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
     }
     void PlayerLaserShotTail()
     {
-        mIsShootHead = false;
-        Instantiate(mLaser[0], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
+        //mIsShootHead = false;
+        //Instantiate(mLaser[0], mInfo.SpawnTransf[0].position, mLaser[0].transform.rotation);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -152,29 +121,29 @@ public class PlayerControl : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.Translate(Vector3.left * mInfo.Speed * Time.deltaTime);
+            transform.Translate(Vector3.left * mInfos.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Translate(Vector3.right * mInfo.Speed * Time.deltaTime);
+            transform.Translate(Vector3.right * mInfos.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.Translate(Vector3.up * mInfo.Speed * Time.deltaTime);
+            transform.Translate(Vector3.up * mInfos.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.Translate(Vector3.down * mInfo.Speed * Time.deltaTime);
+            transform.Translate(Vector3.down * mInfos.Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.Z))
         {
             if (Time.time > mNextFire)
             {
-                //PlayerShot();
+                PlayerShot();
             }
             if (Time.time > mNextChase)
             {
-                //PlayerChaseShot();
+                PlayerChaseShot();
             }
             if (Time.time > mNextLaser && mIsShootHead)
             {
@@ -184,12 +153,12 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //PlayerLaserShotHead();
-            TestKeyDown(); 
+            //TestKeyDown(); 
         }
         if (Input.GetKeyUp(KeyCode.Z))
         {
             //PlayerLaserShotTail();
-            TestKeyUp();
+            //TestKeyUp();
         }
     }
 }

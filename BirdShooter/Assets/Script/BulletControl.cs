@@ -3,43 +3,34 @@ using System.Collections;
 
 public class BulletControl : MonoBehaviour {
 
-    public float mSpeed;
+    public BulletObjStruct mInfos;
 
-    public Sprite[] mBulletSprite;
-    public Sprite[] mBulletEpSprite;
-
-    
-    float mDamage;
-    int mPowerIndex;
+    public Sprite mSpr;
 
     void Awake()
     {
-        mPowerIndex = 0;
-        mDamage = 1;
+        
     }
 
 	// Use this for initialization
 	void Start ()
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = mBulletSprite[mPowerIndex];
+        
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        transform.Translate(Vector3.right * mSpeed * Time.deltaTime);
+        transform.Translate(Vector3.right * mInfos.Speed * Time.deltaTime);
         CheckPosi();
-    }
-
-    public void SetBulletInfo(int index, float damage)
-    {
-        mPowerIndex = index;
-        mDamage = damage;
     }
 
     void CheckPosi()
     {
-        if (transform.position.x > 10)
+        if (transform.position.x < mInfos.Bound.xMin ||
+            transform.position.x > mInfos.Bound.xMax ||
+            transform.position.y < mInfos.Bound.yMin ||
+            transform.position.y > mInfos.Bound.yMax)
         {
             Destroy(gameObject);
         }
@@ -49,8 +40,8 @@ public class BulletControl : MonoBehaviour {
     {
         if (other.gameObject.tag == "Enemy")
         {
-            other.gameObject.SendMessage("Damaged", mDamage);
-            gameObject.GetComponent<SpriteRenderer>().sprite = mBulletEpSprite[mPowerIndex];
+            other.gameObject.SendMessage("Damaged", mInfos.Damage);
+            gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
             Destroy(gameObject, 0.1f);
             Destroy(this);
         }

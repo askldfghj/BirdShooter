@@ -10,6 +10,8 @@ public class E_BulletControl : MonoBehaviour
 
     public Sprite mSpr;
 
+    public BulletObjStruct mInfos;
+
     Animator mAni;
     Vector3 mDirection;
     float mTrackTime;
@@ -44,7 +46,10 @@ public class E_BulletControl : MonoBehaviour
 
     void CheckPosi()
     {
-        if (transform.position.x < 0)
+        if (transform.position.x < mInfos.Bound.xMin ||
+            transform.position.x > mInfos.Bound.xMax ||
+            transform.position.y < mInfos.Bound.yMin ||
+            transform.position.y > mInfos.Bound.yMax)
         {
             Destroy(gameObject);
         }

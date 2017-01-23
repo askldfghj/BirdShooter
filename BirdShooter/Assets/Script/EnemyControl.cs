@@ -9,10 +9,9 @@ public class EnemyControl : MonoBehaviour {
     float mNextFire;
 
     public GameObject mItem;
-
-    public ObjectBasicInfo mInfo;
     
 
+    public EnemyObjStruct mInfos;
     void Awake()
     {
         mNextFire = 0;
@@ -35,7 +34,7 @@ public class EnemyControl : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (mInfo.Health <= 0)
+        if (mInfos.Health <= 0)
         {
             EnemyDown();
             mBox2d.enabled = false;
@@ -46,7 +45,10 @@ public class EnemyControl : MonoBehaviour {
 
     void CheckPosi()
     {
-        if (transform.position.x < 0)
+        if (transform.position.x < mInfos.Bound.xMin ||
+            transform.position.x > mInfos.Bound.xMax ||
+            transform.position.y < mInfos.Bound.yMin ||
+            transform.position.y > mInfos.Bound.yMax)
         {
             Destroy(gameObject);
         }
@@ -55,7 +57,7 @@ public class EnemyControl : MonoBehaviour {
 
     void EnemyMove()
     {
-        transform.Translate(Vector3.left * mInfo.Speed * Time.deltaTime);
+        transform.Translate(Vector3.left * mInfos.Speed * Time.deltaTime);
     }
 
     void CreateItem()
@@ -70,14 +72,14 @@ public class EnemyControl : MonoBehaviour {
     {
         if (Time.time > mNextFire)
         {
-            mNextFire = Time.time + mInfo.FireRate;
-            Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation);
+            mNextFire = Time.time + mInfos.BulletInfo.FireRate;
+            Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation);
         }
     }
 
     void Damaged(float dam)
     {
-        mInfo.Health -= dam;
+        mInfos.Health -= dam;
     }
 
 
