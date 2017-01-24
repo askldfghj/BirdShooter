@@ -5,13 +5,23 @@ using System.Collections.Generic;
 public class PlayerControl : MonoBehaviour {
 
     public Boundary mBoundary;
+    GameObject mLineLaser;
     Animator mPlayerAni;
     float mNextFire;
     float mNextChase;
     float mNextLaser;
     int mPowerIndex;
+    bool mIsFirePush;
 
     public PlayerObjStruct mInfos;
+
+    enum BulletStyle { Basic, Laser }
+    enum BasicBulletStyle { oneway, threeway }
+    BulletStyle mCurrentBullet;
+    BasicBulletStyle mBaiscStyle;
+
+    bool mIsChase;
+
 
     // Use this for initialization
 
@@ -19,10 +29,14 @@ public class PlayerControl : MonoBehaviour {
 
     void Awake()
     {
+        mIsFirePush = false;
         mNextFire = 0;
         mNextLaser = 0;
         mPowerIndex = 0;
+        mCurrentBullet = BulletStyle.Basic;
+        mBaiscStyle = BasicBulletStyle.oneway;
         mIsShootHead = false;
+        mIsChase = false;
         mPlayerAni = GetComponent<Animator>();
     }
     void Start()
@@ -51,6 +65,32 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
+    void TurnBasic()
+    {
+        mCurrentBullet = BulletStyle.Basic;
+        Destroy(mLineLaser);
+    }
+
+    void TurnLaser()
+    {
+        mCurrentBullet = BulletStyle.Laser;
+        if (mIsFirePush)
+        {
+            mLineLaser = Instantiate(mInfos.LineLaser.Bullet, mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
+                         as GameObject;
+        }
+    }
+
+    void ToThreeWay()
+    {
+        mBaiscStyle = BasicBulletStyle.threeway;
+    }
+
+    void AdaptChaser()
+    {
+        mIsChase = true;
+    }
+
     void PositionFix()
     {
         transform.position = new Vector3
@@ -66,23 +106,39 @@ public class PlayerControl : MonoBehaviour {
         mPlayerAni.SetTrigger("PlayerHit");
     }
 
-    void PlayerShot()
+    void BasicShot()
     {
         mNextFire = Time.time + mInfos.BasicBullet[mPowerIndex].FireRate;
-        GameObject bullet = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet, 
-                                        mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
-                            as GameObject;
+        switch (mBaiscStyle)
+        {
+            case BasicBulletStyle.oneway:
+                GameObject bullet = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet,
+                                                mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
+                                    as GameObject;
+                break;
+            case BasicBulletStyle.threeway:
+                GameObject bullet1 = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet,
+                                                mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
+                                    as GameObject;
+                GameObject bullet2 = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet,
+                                                mInfos.SpawnTransf[0].position, Quaternion.Euler(0, 0, 5))
+                                    as GameObject;
+                GameObject bullet3 = Instantiate(mInfos.BasicBullet[mPowerIndex].Bullet,
+                                                mInfos.SpawnTransf[0].position, Quaternion.Euler(0, 0, -5))
+                                    as GameObject;
+                break;
+        }
     }
 
-    void TestKeyDown()
+    void LineLaserEnd()
     {
-        //mLineLaser = Instantiate(mInfo.BulletObj, mInfo.SpawnTransf[0].position, mInfo.SpawnTransf[0].rotation)
-        //                    as GameObject;
+        mLineLaser = Instantiate(mInfos.LineLaser.Bullet, mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation)
+                     as GameObject;
     }
 
-    void TestKeyUp()
+    void LineLaserStart()
     {
-        //Destroy(mLineLaser);
+        Destroy(mLineLaser);
     }
 
 
@@ -137,14 +193,16 @@ public class PlayerControl : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.Z))
         {
-            if (Time.time > mNextFire)
-            {
-                PlayerShot();
-            }
-            if (Time.time > mNextChase)
+            if (Time.time > mNextChase && mIsChase)
             {
                 PlayerChaseShot();
             }
+
+            if (Time.time > mNextFire && mCurrentBullet == BulletStyle.Basic)
+            {
+                BasicShot();
+            }
+            
             if (Time.time > mNextLaser && mIsShootHead)
             {
                 //PlayerLaserShot();
@@ -153,12 +211,20 @@ public class PlayerControl : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //PlayerLaserShotHead();
-            //TestKeyDown(); 
+            mIsFirePush = true;
+            if (mCurrentBullet == BulletStyle.Laser)
+            {
+                LineLaserEnd();
+            }
         }
         if (Input.GetKeyUp(KeyCode.Z))
         {
             //PlayerLaserShotTail();
-            //TestKeyUp();
+            mIsFirePush = false;
+            if (mCurrentBullet == BulletStyle.Laser)
+            {
+                LineLaserStart();
+            }
         }
     }
 }

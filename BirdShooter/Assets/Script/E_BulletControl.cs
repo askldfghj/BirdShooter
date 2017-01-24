@@ -34,7 +34,7 @@ public class E_BulletControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector2.left * mSpeed * Time.deltaTime);
+        transform.Translate(Vector2.left * mInfos.Speed * Time.deltaTime);
         CheckPosi();
         //if (Time.time - mTrackTime >= mTracking)
         //{

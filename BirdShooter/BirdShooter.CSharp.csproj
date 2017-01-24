@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ChaseBulletItem.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -171,6 +172,8 @@
     <Compile Include="Assets\Script\StageLoader.cs" />
     <Compile Include="Assets\Script\StartButton.cs" />
     <Compile Include="Assets\Script\linerend.cs" />
+    <Compile Include="Assets\ThreeWayItem.cs" />
+    <Compile Include="Assets\TurnBulletItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\ReadMe - 2.7.0.txt" />

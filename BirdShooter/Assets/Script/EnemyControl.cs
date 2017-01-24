@@ -8,12 +8,17 @@ public class EnemyControl : MonoBehaviour {
     Animator mEnemyAni;
     float mNextFire;
 
+    int mAngle;
+
+    bool mIsAngleUp;
     public GameObject mItem;
     
 
     public EnemyObjStruct mInfos;
     void Awake()
     {
+        mIsAngleUp = true;
+        mAngle = 0;
         mNextFire = 0;
         mEnemyAni = GetComponent<Animator>();
         mBox2d = GetComponent<BoxCollider2D>();
@@ -53,7 +58,18 @@ public class EnemyControl : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-    
+
+    void ChangeAngle()
+    {
+        if (mIsAngleUp)
+        {
+            mAngle += 7;
+        }
+        else
+        {
+            mAngle -= 7;
+        }
+    }
 
     void EnemyMove()
     {
@@ -72,8 +88,17 @@ public class EnemyControl : MonoBehaviour {
     {
         if (Time.time > mNextFire)
         {
+            ChangeAngle();
+            if (mAngle >= 60)
+            {
+                mIsAngleUp = false;
+            }
+            else if (mAngle <= -60)
+            {
+                mIsAngleUp = true;
+            }
             mNextFire = Time.time + mInfos.BulletInfo.FireRate;
-            Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, mInfos.SpawnTransf[0].rotation);
+            Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, Quaternion.Euler(0,0,mAngle));
         }
     }
 

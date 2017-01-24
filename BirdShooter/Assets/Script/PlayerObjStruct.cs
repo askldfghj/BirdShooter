@@ -6,4 +6,5 @@ public class PlayerObjStruct : PlainObjStruct
     public BulletStruct[] BasicBullet;
     public BulletStruct ChaseBullet;
     public BulletStruct Laser;
+    public BulletStruct LineLaser;
 }

@@ -17,10 +17,7 @@ public class linerend : MonoBehaviour {
     {
         mLayerMask = 1 << 8;
         mPlayer = GameObject.Find("BulletSpawn");
-    }
 
-    void Start()
-    {
         //라인렌더러 설정
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetColors(Color.red, Color.yellow);
@@ -32,6 +29,14 @@ public class linerend : MonoBehaviour {
         end = transform.position + distance;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
+    }
+
+    void Start()
+    {
+        
+        
+
+        
     }
 
     // Update is called once per frame
