@@ -24,7 +24,7 @@ public class StageLoader : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        SpawnEnemy();
+        //SpawnEnemy();
 	}
 
     void SpawnEnemy()

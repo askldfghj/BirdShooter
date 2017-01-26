@@ -98,7 +98,12 @@ public class EnemyControl : MonoBehaviour {
                 mIsAngleUp = true;
             }
             mNextFire = Time.time + mInfos.BulletInfo.FireRate;
-            Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, Quaternion.Euler(0,0,mAngle));
+            //Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, Quaternion.Euler(0,0,mAngle));
+            GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
+            if (bullet == null) return;
+            bullet.transform.position = mInfos.SpawnTransf[0].position;
+            bullet.transform.rotation = Quaternion.Euler(0, 0, mAngle);
+            bullet.SetActive(true);
         }
     }
 

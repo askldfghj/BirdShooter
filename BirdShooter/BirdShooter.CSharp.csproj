@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\ChaseBulletItem.cs" />
+    <Compile Include="Assets\FPSDisplay.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Assets\Script\EnemyObjStruct.cs" />
     <Compile Include="Assets\Script\ItemControl.cs" />
     <Compile Include="Assets\Script\ObjectBasicInfo.cs" />
+    <Compile Include="Assets\Script\ObjectPool.cs" />
     <Compile Include="Assets\Script\P_ChaseBulletControl.cs" />
     <Compile Include="Assets\Script\P_LaserBulletControl.cs" />
     <Compile Include="Assets\Script\PlainObjStruct.cs" />

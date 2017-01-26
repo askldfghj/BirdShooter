@@ -12,6 +12,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
     float mTrackTime;
     bool mIsNoEnemy;
     bool mIsEjectd;
+    bool mIsHit;
     Transform mTargetParent;
     Transform mTarget;
 
@@ -19,20 +20,29 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     void Awake()
     {
-        mIsNoEnemy = true;
-        mIsEjectd = false;
-        mTrackTime = Time.time;
         mAni = GetComponent<Animator>();
         mTargetParent = GameObject.Find("EnemySpawnParent").transform;
     }
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        BulletSpeedTrigger();
-        ChaseFunction();
+    void Start ()
+    {
+        
+    }
+
+    void OnEnable()
+    {
+        mTrackTime = Time.time;
+        mIsNoEnemy = SearchTarget();
+        mIsEjectd = false;
+        mIsHit = false;
+    }
+
+    // Update is called once per frame
+    void Update () {
+        if (!mIsHit)
+        {
+            BulletSpeedTrigger();
+            ChaseFunction();
+        }
         CheckPosi();
     }
 
@@ -56,7 +66,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
             transform.position.y < mInfos.Bound.yMin ||
             transform.position.y > mInfos.Bound.yMax)
         {
-            Destroy(gameObject);
+            InActive();
         }
     }
 
@@ -77,6 +87,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
         if (mTarget == null)
         {
             mIsNoEnemy = SearchTarget();
+            
         }
         if (Time.time - mTrackTime >= mInfos.Tracking && !mIsNoEnemy) // 트래킹할 시간이 됐는지 체크한다.
         {
@@ -90,7 +101,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
         }
         if (mTarget == null && Time.time - mTrackTime > 1.5)
         {
-            Destroy(gameObject);
+            InActive();
         }
     }
 
@@ -100,9 +111,13 @@ public class P_ChaseBulletControl : MonoBehaviour {
         {
             other.gameObject.SendMessage("Damaged", mInfos.Damage);
             mAni.Stop();
-            gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
-            Destroy(gameObject, 0.1f);
-            Destroy(this);
+            InActive();
+            mIsHit = true;
         }
+    }
+
+    void InActive()
+    {
+        gameObject.SetActive(false);
     }
 }

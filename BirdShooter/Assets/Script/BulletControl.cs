@@ -4,8 +4,10 @@ using System.Collections;
 public class BulletControl : MonoBehaviour {
 
     public BulletObjStruct mInfos;
-
+    
     public Sprite mSpr;
+
+    bool mIsHit;
 
     void Awake()
     {
@@ -17,11 +19,16 @@ public class BulletControl : MonoBehaviour {
     {
         
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    void OnEnable()
     {
-        transform.Translate(Vector3.right * mInfos.Speed * Time.deltaTime);
+        mIsHit = false;
+    }
+
+    // Update is called once per frame
+    void Update ()
+    {
+        if(!mIsHit) transform.Translate(Vector3.right * mInfos.Speed * Time.deltaTime);
         CheckPosi();
     }
 
@@ -32,7 +39,7 @@ public class BulletControl : MonoBehaviour {
             transform.position.y < mInfos.Bound.yMin ||
             transform.position.y > mInfos.Bound.yMax)
         {
-            Destroy(gameObject);
+            InActive();
         }
     }
 
@@ -41,9 +48,15 @@ public class BulletControl : MonoBehaviour {
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.SendMessage("Damaged", mInfos.Damage);
-            gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
-            Destroy(gameObject, 0.1f);
-            Destroy(this);
+            //gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
+            mIsHit = true;
+            InActive();
+            //Invoke("InActive", 0.1f);
         }
+    }
+
+    void InActive()
+    {
+        gameObject.SetActive(false);
     }
 }
