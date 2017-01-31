@@ -9,6 +9,7 @@ public class EnemyControl : MonoBehaviour {
     float mNextFire;
 
     int mAngle;
+    float mHealth;
 
     bool mIsAngleUp;
     public GameObject mItem;
@@ -17,6 +18,7 @@ public class EnemyControl : MonoBehaviour {
     public EnemyObjStruct mInfos;
     void Awake()
     {
+        mHealth = mInfos.Health;
         mIsAngleUp = true;
         mAngle = 0;
         mNextFire = 0;
@@ -37,15 +39,23 @@ public class EnemyControl : MonoBehaviour {
         CheckPosi();
     }
 
+    void OnEnable()
+    {
+        mInfos.Health = mHealth; 
+    }
+
     void FixedUpdate()
     {
         if (mInfos.Health <= 0)
         {
-            EnemyDown();
-            mBox2d.enabled = false;
-            Destroy(gameObject, 0.125f);
-            Destroy(this);
+            //EnemyDown();
+            InActive();
         }
+    }
+
+    void InActive()
+    {
+        gameObject.SetActive(false);
     }
 
     void CheckPosi()
@@ -55,7 +65,7 @@ public class EnemyControl : MonoBehaviour {
             transform.position.y < mInfos.Bound.yMin ||
             transform.position.y > mInfos.Bound.yMax)
         {
-            Destroy(gameObject);
+            InActive();
         }
     }
 
@@ -98,7 +108,6 @@ public class EnemyControl : MonoBehaviour {
                 mIsAngleUp = true;
             }
             mNextFire = Time.time + mInfos.BulletInfo.FireRate;
-            //Instantiate(mInfos.BulletInfo.Bullet, mInfos.SpawnTransf[0].position, Quaternion.Euler(0,0,mAngle));
             GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
             if (bullet == null) return;
             bullet.transform.position = mInfos.SpawnTransf[0].position;

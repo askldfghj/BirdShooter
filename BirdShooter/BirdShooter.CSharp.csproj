@@ -66,6 +66,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BulletEpControl.cs" />
     <Compile Include="Assets\ChaseBulletItem.cs" />
     <Compile Include="Assets\FPSDisplay.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />

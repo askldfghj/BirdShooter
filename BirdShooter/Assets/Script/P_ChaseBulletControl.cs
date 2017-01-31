@@ -12,7 +12,6 @@ public class P_ChaseBulletControl : MonoBehaviour {
     float mTrackTime;
     bool mIsNoEnemy;
     bool mIsEjectd;
-    bool mIsHit;
     Transform mTargetParent;
     Transform mTarget;
 
@@ -30,31 +29,38 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     void OnEnable()
     {
+        mTarget = null;
         mTrackTime = Time.time;
         mIsNoEnemy = SearchTarget();
         mIsEjectd = false;
-        mIsHit = false;
     }
 
+    //여기 문제있음
     // Update is called once per frame
     void Update () {
-        if (!mIsHit)
-        {
-            BulletSpeedTrigger();
-            ChaseFunction();
-        }
+        BulletSpeedTrigger();
+        ChaseFunction();
         CheckPosi();
     }
 
+
     bool SearchTarget()
     {
-        if (mTargetParent.childCount <= 0)
+        Vector2 vec = new Vector2(100, 0);
+        for (int i = 0; i < mTargetParent.childCount; i++)
+        {
+            if (mTargetParent.GetChild(i).gameObject.activeSelf && vec.x > mTargetParent.GetChild(i).position.x)
+            {
+                vec = mTargetParent.GetChild(i).position;
+                mTarget = mTargetParent.GetChild(i);
+            }
+        }
+        if (mTarget == null)
         {
             return true;
         }
         else
         {
-            mTarget = mTargetParent.GetChild(Random.Range(0, mTargetParent.childCount));
             return false;
         }
     }
@@ -84,12 +90,13 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     void ChaseFunction()
     {
-        if (mTarget == null)
+        
+        if (mIsNoEnemy || !mTarget.gameObject.activeSelf)
         {
             mIsNoEnemy = SearchTarget();
             
         }
-        if (Time.time - mTrackTime >= mInfos.Tracking && !mIsNoEnemy) // 트래킹할 시간이 됐는지 체크한다.
+        if (Time.time - mTrackTime >= mInfos.Tracking && mTarget.gameObject.activeSelf) // 트래킹할 시간이 됐는지 체크한다.
         {
             mIsEjectd = true;
             Vector2 dir = mTarget.position - transform.position; // 유도탄과 타겟 사이의 벡터값 구하기
@@ -99,7 +106,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
             if (transform.rotation == tarRot) mTrackTime = Time.time; // 목표각도까지 회전했으면 타이머를 리셋한다.
         }
-        if (mTarget == null && Time.time - mTrackTime > 1.5)
+        if (mIsNoEnemy && Time.time - mTrackTime > 1.5)
         {
             InActive();
         }
@@ -111,9 +118,20 @@ public class P_ChaseBulletControl : MonoBehaviour {
         {
             other.gameObject.SendMessage("Damaged", mInfos.Damage);
             mAni.Stop();
+            CreateExplosion();
             InActive();
-            mIsHit = true;
         }
+    }
+
+    void CreateExplosion()
+    {
+        GameObject ep = ObjectPool.mCurrent.GetPoolBasicBulletEp();
+        if (ep == null) return;
+        ep.transform.position = transform.position;
+        ep.transform.rotation = transform.rotation;
+        BulletEpControl script = ep.GetComponent<BulletEpControl>();
+        script.SetEpSprite(0);
+        ep.SetActive(true);
     }
 
     void InActive()

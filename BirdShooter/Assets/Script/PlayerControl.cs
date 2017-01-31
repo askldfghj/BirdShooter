@@ -112,28 +112,12 @@ public class PlayerControl : MonoBehaviour {
         switch (mBaiscStyle)
         {
             case BasicBulletStyle.oneway:
-                GameObject bullet = ObjectPool.mCurrent.GetPoolBasicBullet1();
-                if (bullet == null) return;
-                bullet.transform.position = mInfos.SpawnTransf[0].position;
-                bullet.transform.rotation = mInfos.SpawnTransf[0].rotation;
-                bullet.SetActive(true);
+                CreateBasicBullet(Quaternion.Euler(0, 0, 0));
                 break;
             case BasicBulletStyle.threeway:
-                GameObject bullet1 = ObjectPool.mCurrent.GetPoolBasicBullet1();
-                if (bullet1 == null) return;
-                bullet1.transform.position = mInfos.SpawnTransf[0].position;
-                bullet1.transform.rotation = mInfos.SpawnTransf[0].rotation;
-                bullet1.SetActive(true);
-                GameObject bullet2 = ObjectPool.mCurrent.GetPoolBasicBullet1();
-                if (bullet2 == null) return;
-                bullet2.transform.position = mInfos.SpawnTransf[0].position;
-                bullet2.transform.rotation = Quaternion.Euler(0, 0, 5);
-                bullet2.SetActive(true);
-                GameObject bullet3 = ObjectPool.mCurrent.GetPoolBasicBullet1();
-                if (bullet3 == null) return;
-                bullet3.transform.position = mInfos.SpawnTransf[0].position;
-                bullet3.transform.rotation = Quaternion.Euler(0, 0, -5);
-                bullet3.SetActive(true);
+                CreateBasicBullet(Quaternion.Euler(0, 0, 0));
+                CreateBasicBullet(Quaternion.Euler(0, 0, 5));
+                CreateBasicBullet(Quaternion.Euler(0, 0, -5));
                 break;
         }
     }
@@ -153,17 +137,8 @@ public class PlayerControl : MonoBehaviour {
     void PlayerChaseShot()
     {
         mNextChase = Time.time + mInfos.ChaseBullet.FireRate;
-        GameObject bullet1 = ObjectPool.mCurrent.GetPoolChaseBullet();
-        if (bullet1 == null) return;
-        bullet1.transform.position = mInfos.SpawnTransf[1].position;
-        bullet1.transform.rotation = mInfos.SpawnTransf[1].rotation;
-        bullet1.SetActive(true);
-
-        GameObject bullet2 = ObjectPool.mCurrent.GetPoolChaseBullet();
-        if (bullet2 == null) return;
-        bullet2.transform.position = mInfos.SpawnTransf[2].position;
-        bullet2.transform.rotation = mInfos.SpawnTransf[2].rotation;
-        bullet2.SetActive(true);
+        CreateChaseBullet(1);
+        CreateChaseBullet(2);
     }
 
     void PlayerLaserShot()
@@ -188,6 +163,27 @@ public class PlayerControl : MonoBehaviour {
         {
             PlayerHit();
         }
+    }
+
+    void CreateBasicBullet(Quaternion rot)
+    {
+        GameObject bullet = ObjectPool.mCurrent.GetPoolBasicBullet1();
+        if (bullet == null) return;
+        bullet.transform.position = mInfos.SpawnTransf[0].position;
+        bullet.transform.rotation = rot;
+        BulletControl script = bullet.GetComponent<BulletControl>();
+        script.SetBulletSpr(mPowerIndex);
+        bullet.SetActive(true);
+        
+    }
+
+    void CreateChaseBullet(int transnum)
+    {
+        GameObject bullet = ObjectPool.mCurrent.GetPoolChaseBullet();
+        if (bullet == null) return;
+        bullet.transform.position = mInfos.SpawnTransf[transnum].position;
+        bullet.transform.rotation = mInfos.SpawnTransf[transnum].rotation;
+        bullet.SetActive(true);
     }
 
     void InputProgress()

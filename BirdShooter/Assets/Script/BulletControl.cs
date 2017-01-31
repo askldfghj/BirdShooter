@@ -4,11 +4,11 @@ using System.Collections;
 public class BulletControl : MonoBehaviour {
 
     public BulletObjStruct mInfos;
-    
-    public Sprite mSpr;
+
+    public Sprite[] mPowerSpr;
 
     bool mIsHit;
-
+    int mIndex;
     void Awake()
     {
         
@@ -18,6 +18,12 @@ public class BulletControl : MonoBehaviour {
 	void Start ()
     {
         
+    }
+
+    public void SetBulletSpr(int index)
+    {
+        mIndex = index;
+        gameObject.GetComponent<SpriteRenderer>().sprite = mPowerSpr[index];
     }
 
     void OnEnable()
@@ -50,9 +56,21 @@ public class BulletControl : MonoBehaviour {
             other.gameObject.SendMessage("Damaged", mInfos.Damage);
             //gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
             mIsHit = true;
+            CreateExplosion();
             InActive();
             //Invoke("InActive", 0.1f);
         }
+    }
+
+    void CreateExplosion()
+    {
+        GameObject ep = ObjectPool.mCurrent.GetPoolBasicBulletEp();
+        if (ep == null) return;
+        ep.transform.position = transform.position;
+        ep.transform.rotation = transform.rotation;
+        BulletEpControl script = ep.GetComponent<BulletEpControl>();
+        script.SetEpSprite(mIndex);
+        ep.SetActive(true);
     }
 
     void InActive()
