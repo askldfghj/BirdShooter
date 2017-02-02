@@ -173,6 +173,7 @@ public class PlayerControl : MonoBehaviour {
         bullet.transform.rotation = rot;
         BulletControl script = bullet.GetComponent<BulletControl>();
         script.SetBulletSpr(mPowerIndex);
+        script.SetBulletDamage((mPowerIndex + 1));
         bullet.SetActive(true);
         
     }

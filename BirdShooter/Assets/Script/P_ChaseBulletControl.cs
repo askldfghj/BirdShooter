@@ -10,7 +10,7 @@ public class P_ChaseBulletControl : MonoBehaviour {
 
     Animator mAni;
     float mTrackTime;
-    bool mIsNoEnemy;
+    bool mIsTargeting;
     bool mIsEjectd;
     Transform mTargetParent;
     Transform mTarget;
@@ -31,37 +31,51 @@ public class P_ChaseBulletControl : MonoBehaviour {
     {
         mTarget = null;
         mTrackTime = Time.time;
-        mIsNoEnemy = SearchTarget();
+        mIsTargeting = false;
         mIsEjectd = false;
     }
 
     //여기 문제있음
     // Update is called once per frame
     void Update () {
-        BulletSpeedTrigger();
-        ChaseFunction();
+        //BulletSpeedTrigger();
+        //ChaseFunction();
+        CheckTarget();
+        SearchTarget();
+        MoveBullet();
         CheckPosi();
     }
 
-
-    bool SearchTarget()
+    void MoveBullet()
     {
-        Vector2 vec = new Vector2(100, 0);
-        for (int i = 0; i < mTargetParent.childCount; i++)
+        JustRight();
+        if (mIsTargeting)
         {
-            if (mTargetParent.GetChild(i).gameObject.activeSelf && vec.x > mTargetParent.GetChild(i).position.x)
+            Chasing();
+        }
+    }
+
+
+    void SearchTarget()
+    {
+        if (!mIsTargeting)
+        {
+            float dist = Vector2.Distance(transform.position, new Vector2(100, 0));
+            float shortdist = dist;
+            for (int i = 0; i < mTargetParent.childCount; i++)
             {
-                vec = mTargetParent.GetChild(i).position;
-                mTarget = mTargetParent.GetChild(i);
+                if (mTargetParent.GetChild(i).gameObject.activeSelf)
+                {
+                    dist = Vector2.Distance(transform.position, mTargetParent.GetChild(i).position);
+
+                    if (dist < shortdist)
+                    {
+                        shortdist = dist;
+                        mTarget = mTargetParent.GetChild(i);
+                        mIsTargeting = true;
+                    }
+                }
             }
-        }
-        if (mTarget == null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 
@@ -76,6 +90,19 @@ public class P_ChaseBulletControl : MonoBehaviour {
         }
     }
 
+    void CheckTarget()
+    {
+        if (mTarget == null || !mTarget.gameObject.activeSelf)
+        {
+            mIsTargeting = false;
+        }
+    }
+
+    void JustRight()
+    {
+        transform.Translate(Vector2.right * mInfos.Speed * Time.deltaTime);
+    }
+
     void BulletSpeedTrigger()
     {
         if (!mIsEjectd)
@@ -88,27 +115,16 @@ public class P_ChaseBulletControl : MonoBehaviour {
         }
     }
 
-    void ChaseFunction()
+    void Chasing()
     {
-        
-        if (mIsNoEnemy || !mTarget.gameObject.activeSelf)
+        if (Time.time - mTrackTime >= mInfos.Tracking) // 트래킹할 시간이 됐는지 체크한다.
         {
-            mIsNoEnemy = SearchTarget();
-            
-        }
-        if (Time.time - mTrackTime >= mInfos.Tracking && mTarget.gameObject.activeSelf) // 트래킹할 시간이 됐는지 체크한다.
-        {
-            mIsEjectd = true;
             Vector2 dir = mTarget.position - transform.position; // 유도탄과 타겟 사이의 벡터값 구하기
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg; // 2D 각도값 구하기
             Quaternion tarRot = Quaternion.AngleAxis(angle, Vector3.forward); // 얻어진 2D 좌표계 각도를 Quaternion으로 변환한다.
             transform.rotation = Quaternion.Slerp(transform.rotation, tarRot, mInfos.RotateSpeed * Time.deltaTime); // 목표 각도로 서서히 이동시킨다.
 
             if (transform.rotation == tarRot) mTrackTime = Time.time; // 목표각도까지 회전했으면 타이머를 리셋한다.
-        }
-        if (mIsNoEnemy && Time.time - mTrackTime > 1.5)
-        {
-            InActive();
         }
     }
 

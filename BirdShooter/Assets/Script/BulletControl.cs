@@ -26,6 +26,11 @@ public class BulletControl : MonoBehaviour {
         gameObject.GetComponent<SpriteRenderer>().sprite = mPowerSpr[index];
     }
 
+    public void SetBulletDamage(float dam)
+    {
+        mInfos.Damage = dam;
+    }
+
     void OnEnable()
     {
         mIsHit = false;
