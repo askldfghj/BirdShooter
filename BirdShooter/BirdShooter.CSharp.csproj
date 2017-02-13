@@ -66,9 +66,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BulletEpControl.cs" />
-    <Compile Include="Assets\ChaseBulletItem.cs" />
-    <Compile Include="Assets\FPSDisplay.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -158,11 +155,14 @@
     <Compile Include="Assets\Script\BasicObjStruct.cs" />
     <Compile Include="Assets\Script\Boundary.cs" />
     <Compile Include="Assets\Script\BulletControl.cs" />
+    <Compile Include="Assets\Script\BulletEpControl.cs" />
     <Compile Include="Assets\Script\BulletObjStruct.cs" />
     <Compile Include="Assets\Script\BulletStruct.cs" />
+    <Compile Include="Assets\Script\ChaseBulletItem.cs" />
     <Compile Include="Assets\Script\E_BulletControl.cs" />
     <Compile Include="Assets\Script\EnemyControl.cs" />
     <Compile Include="Assets\Script\EnemyObjStruct.cs" />
+    <Compile Include="Assets\Script\FPSDisplay.cs" />
     <Compile Include="Assets\Script\ItemControl.cs" />
     <Compile Include="Assets\Script\ObjectBasicInfo.cs" />
     <Compile Include="Assets\Script\ObjectPool.cs" />
@@ -174,9 +174,11 @@
     <Compile Include="Assets\Script\ReturnMain.cs" />
     <Compile Include="Assets\Script\StageLoader.cs" />
     <Compile Include="Assets\Script\StartButton.cs" />
+    <Compile Include="Assets\Script\ThreeWayItem.cs" />
+    <Compile Include="Assets\Script\TurnBulletItem.cs" />
+    <Compile Include="Assets\Script\ZakoMovePattern.cs" />
+    <Compile Include="Assets\Script\ZakoShotPattern.cs" />
     <Compile Include="Assets\Script\linerend.cs" />
-    <Compile Include="Assets\ThreeWayItem.cs" />
-    <Compile Include="Assets\TurnBulletItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\ReadMe - 2.7.0.txt" />

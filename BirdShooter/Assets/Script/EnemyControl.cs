@@ -12,8 +12,11 @@ public class EnemyControl : MonoBehaviour {
     float mHealth;
 
     bool mIsAngleUp;
+    bool goleft;
     public GameObject mItem;
-    
+
+
+    float Speed;
 
     public EnemyObjStruct mInfos;
     void Awake()
@@ -22,8 +25,11 @@ public class EnemyControl : MonoBehaviour {
         mIsAngleUp = true;
         mAngle = 0;
         mNextFire = 0;
+        Speed = 5;
         mEnemyAni = GetComponent<Animator>();
         mBox2d = GetComponent<BoxCollider2D>();
+
+        goleft = true;
     }
 	// Use this for initialization
 	void Start ()
@@ -34,14 +40,27 @@ public class EnemyControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        EnemyMove(); //공통아님
-        ShootBullet(); //공통아님
+        //EnemyMove(); //공통아님
+        //if (goleft)
+        //{
+        //    Speed -= 0.05f;
+        //}
+        //else
+        //{
+        //    Speed += 0.05f;
+        //}
+        //if (Speed < 0)
+        //{
+        //    goleft = false;
+        //}
         CheckPosi();
     }
 
     void OnEnable()
     {
-        mInfos.Health = mHealth; 
+        goleft = true;
+        mInfos.Health = mHealth;
+        Speed = 5;
     }
 
     void FixedUpdate()
@@ -80,12 +99,7 @@ public class EnemyControl : MonoBehaviour {
             mAngle -= 7;
         }
     }
-
-    void EnemyMove()
-    {
-        transform.Translate(Vector3.left * mInfos.Speed * Time.deltaTime);
-    }
-
+        
     void CreateItem()
     {
         if (Random.Range(0f, 1f) > 0.7f)
@@ -121,10 +135,8 @@ public class EnemyControl : MonoBehaviour {
         mInfos.Health -= dam;
     }
 
-
-    void EnemyDown()
+    public EnemyObjStruct GetInfos()
     {
-        CreateItem();
-        mEnemyAni.SetTrigger("EnemyDestroy");
+        return mInfos; 
     }
 }

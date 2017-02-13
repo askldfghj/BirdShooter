@@ -41,7 +41,7 @@ public class StageLoader : MonoBehaviour {
     {
         GameObject Zako = ObjectPool.mCurrent.GetPoolZako();
         if (Zako == null) return;
-        Zako.transform.position = new Vector3(11, Random.Range(0.12f, 4.33f), 0);
+        Zako.transform.position = new Vector3(10, Random.Range(0.12f, 4.33f), 0);
         Zako.transform.rotation = transform.rotation;
         Zako.SetActive(true);
     }

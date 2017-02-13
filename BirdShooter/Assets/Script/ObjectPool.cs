@@ -41,6 +41,11 @@ public class ObjectPool : MonoBehaviour {
         mPBasicEps = new List<GameObject>();
         mZakos = new List<GameObject>();
 
+        StartCoroutine(CreatePool());
+    }
+
+    IEnumerator CreatePool()
+    {
         for (int i = 0; i < mEBulletAmount; i++)
         {
             GameObject enemybullet = (GameObject)Instantiate(mEnemyBulletObj);
@@ -51,7 +56,9 @@ public class ObjectPool : MonoBehaviour {
             enemybullet.SetActive(false);
             mEBullets.Add(enemybullet);
             // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            yield return null;
         }
+
         for (int i = 0; i < mPBasic1Amount; i++)
         {
             GameObject basicbullet = (GameObject)Instantiate(mBasicBulletObj);
@@ -62,7 +69,9 @@ public class ObjectPool : MonoBehaviour {
             basicbullet.SetActive(false);
             mPBasics_1.Add(basicbullet);
             // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            yield return null;
         }
+
         for (int i = 0; i < mPChaseAmount; i++)
         {
             GameObject chasebullet = (GameObject)Instantiate(mChaseBulletObj);
@@ -74,17 +83,8 @@ public class ObjectPool : MonoBehaviour {
             mPChases.Add(chasebullet);
             // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
         }
-        for (int i = 0; i < mPBasicEpAmount; i++)
-        {
-            GameObject basicep = (GameObject)Instantiate(mBasicBulletEpObj);
+        yield return null;
 
-            basicep.transform.parent = mPool.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
-
-            //GomPoolObj -> obj에 저장
-            basicep.SetActive(false);
-            mPBasicEps.Add(basicep);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
-        }
         for (int i = 0; i < mZakoEnemyAmount; i++)
         {
             GameObject zako = (GameObject)Instantiate(mZakoEnemyObj);
@@ -95,10 +95,22 @@ public class ObjectPool : MonoBehaviour {
             zako.SetActive(false);
             mZakos.Add(zako);
             // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            yield return null;
+        }
+
+        for (int i = 0; i < mPBasicEpAmount; i++)
+        {
+            GameObject basicep = (GameObject)Instantiate(mBasicBulletEpObj);
+
+            basicep.transform.parent = mPool.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
+
+            //GomPoolObj -> obj에 저장
+            basicep.SetActive(false);
+            mPBasicEps.Add(basicep);
+            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            yield return null;
         }
     }
-
-
 
     public GameObject GetPoolEnemyBullet()
     {

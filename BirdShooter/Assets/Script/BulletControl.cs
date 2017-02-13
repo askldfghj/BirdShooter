@@ -59,7 +59,6 @@ public class BulletControl : MonoBehaviour {
         if (other.gameObject.tag == "Enemy")
         {
             other.gameObject.SendMessage("Damaged", mInfos.Damage);
-            //gameObject.GetComponent<SpriteRenderer>().sprite = mSpr;
             mIsHit = true;
             CreateExplosion();
             InActive();
