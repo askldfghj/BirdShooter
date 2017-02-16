@@ -5,4 +5,5 @@ public class PlainObjStruct : BasicObjStruct
 {
     public Transform[] SpawnTransf;
     public float Health;
+    public bool Invincible;
 }

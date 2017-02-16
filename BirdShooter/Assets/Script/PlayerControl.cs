@@ -20,6 +20,9 @@ public class PlayerControl : MonoBehaviour {
     BulletStyle mCurrentBullet;
     BasicBulletStyle mBaiscStyle;
 
+    Collider2D mBoxcollider;
+    SpriteRenderer mRender;
+
     bool mIsChase;
 
 
@@ -38,6 +41,8 @@ public class PlayerControl : MonoBehaviour {
         mIsShootHead = false;
         mIsChase = false;
         mPlayerAni = GetComponent<Animator>();
+        mBoxcollider = GetComponent<BoxCollider2D>();
+        mRender = GetComponent<SpriteRenderer>();
     }
     void Start()
     {
@@ -104,6 +109,10 @@ public class PlayerControl : MonoBehaviour {
     void PlayerHit()
     {
         mPlayerAni.SetTrigger("PlayerHit");
+        mInfos.Invincible = true;
+        mBoxcollider.enabled = false;
+        StartCoroutine(ColliderDisable());
+        StartCoroutine(CharaBlink());
     }
 
     void BasicShot()
@@ -240,5 +249,24 @@ public class PlayerControl : MonoBehaviour {
                 LineLaserStart();
             }
         }
+    }
+
+    IEnumerator ColliderDisable()
+    {
+        yield return new WaitForSeconds(2);
+        mBoxcollider.enabled = true;
+        mInfos.Invincible = false;
+    }
+
+    IEnumerator CharaBlink()
+    {
+        while (mInfos.Invincible)
+        {
+            mRender.enabled = false;
+            yield return new WaitForSeconds(0.05f);
+            mRender.enabled = true;
+            yield return new WaitForSeconds(0.05f);
+        }
+        mRender.enabled = true;
     }
 }

@@ -66,6 +66,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BirdShooter.CSharp.Plugins.csproj">
+      <Project>{FA918A0B-2780-E78A-99D6-A995983886CD}</Project>
+      <Name>BirdShooter.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\NGUI\Scripts\Interaction\LanguageSelection.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButton.cs" />
     <Compile Include="Assets\NGUI\Scripts\Interaction\UIButtonActivate.cs" />
@@ -151,6 +157,7 @@
     <Compile Include="Assets\NGUI\Scripts\UI\UITiledSprite.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
+    <Compile Include="Assets\Pixelplacement\iTweenPath\iTweenPath.cs" />
     <Compile Include="Assets\Script\BGControl.cs" />
     <Compile Include="Assets\Script\BasicObjStruct.cs" />
     <Compile Include="Assets\Script\Boundary.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Assets\Script\ZakoMovePattern.cs" />
     <Compile Include="Assets\Script\ZakoShotPattern.cs" />
     <Compile Include="Assets\Script\linerend.cs" />
+    <Compile Include="Assets\dfsd.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\ReadMe - 2.7.0.txt" />
@@ -200,6 +208,7 @@
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+    <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
     <None Include="Assets\Sprite Pack\Tap and Fly\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

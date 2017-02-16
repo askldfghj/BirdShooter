@@ -62,7 +62,6 @@ public class BulletControl : MonoBehaviour {
             mIsHit = true;
             CreateExplosion();
             InActive();
-            //Invoke("InActive", 0.1f);
         }
     }
 

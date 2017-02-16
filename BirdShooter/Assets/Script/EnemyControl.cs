@@ -139,4 +139,5 @@ public class EnemyControl : MonoBehaviour {
     {
         return mInfos; 
     }
+
 }

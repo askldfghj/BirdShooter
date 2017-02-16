@@ -96,6 +96,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="BirdShooter.CSharp.Plugins.csproj">
+      <Project>{FA918A0B-2780-E78A-99D6-A995983886CD}</Project>
+      <Name>BirdShooter.CSharp.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="BirdShooter.CSharp.csproj">
       <Project>{C7108F4A-126E-05B6-DFFF-46B583AEAF57}</Project>
       <Name>BirdShooter.CSharp</Name>
@@ -134,6 +138,7 @@
     <Compile Include="Assets\NGUI\Scripts\Editor\UITexturePacker.cs" />
     <Compile Include="Assets\NGUI\Scripts\Editor\UITiledSpriteInspector.cs" />
     <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
+    <Compile Include="Assets\Pixelplacement\iTweenPath\Editor\iTweenPathEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\NGUI\ReadMe - 2.7.0.txt" />
@@ -155,6 +160,7 @@
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+    <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
     <None Include="Assets\Sprite Pack\Tap and Fly\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
