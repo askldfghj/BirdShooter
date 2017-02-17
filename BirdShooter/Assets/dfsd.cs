@@ -1,25 +1,53 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class dfsd : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        //iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath("path"), "easetype", iTween.EaseType.linear,
-        //                                      "time", 3f));
+    List<Vector3> path;
 
-        Vector3 target = new Vector3(3, 3, 0); // 목표점
-        Vector3 targer1 = new Vector3(1, 1, 0);
-        Hashtable hash = new Hashtable();
-        hash.Add("position", target); // 이동 할 위치
-        hash.Add("position", targer1);
-        hash.Add("speed", 3.0f); // 이동 속도 (작을수록 느림)
-        hash.Add("easetype", iTween.EaseType.linear); // 보간법
-        iTween.MoveTo(gameObject, hash); //인자 넘겨주기
+    // Use this for initialization
+    void Awake()
+    {
+        path = new List<Vector3>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void OnEnable()
+    {
+        path.Clear();
+        Pattern1();
+
+        Start();
+    }
+
+    void Start () {
+        iTween.MoveTo(gameObject, iTween.Hash("path", path.ToArray(), "easetype", iTween.EaseType.linear,
+                                              "time", 3f, "oncomplete", "PatternStop"));
+    }
+
+    void Pattern1()
+    {
+        if (gameObject.transform.position.y > 2.25)
+        {
+            path.Add(gameObject.transform.position);
+            path.Add(new Vector3(5.0f, transform.position.y - 1.125f, 0));
+            path.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2.25f, 0));
+        }
+        else
+        {
+            path.Add(gameObject.transform.position);
+            path.Add(new Vector3(5.0f, transform.position.y + 1.125f, 0));
+            path.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2.25f, 0));
+        }
+    }
+
+    void PatternStop()
+    {
+        EnemyControl e = GetComponent<EnemyControl>();
+        e.InActive();
+    }
+
+    // Update is called once per frame
+    void Update () {
         
 	}
 }

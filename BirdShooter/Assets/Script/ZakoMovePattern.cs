@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class ZakoMovePattern : MonoBehaviour {
+
+    List<Vector3> path;
 
     EnemyObjStruct mInfos;
 
@@ -11,72 +13,51 @@ public class ZakoMovePattern : MonoBehaviour {
 
     MovePattern mPattern;
 
-    bool mLeftFlag;
     float mInitSpeed;
 
     void Awake()
     {
+        path = new List<Vector3>();
         mEnemyCon = GetComponent<EnemyControl>();
         mInfos = mEnemyCon.GetInfos();
         mInitSpeed = mInfos.Speed;
         mPattern = (MovePattern)1;
-        mLeftFlag = true;
     }
 
     void OnEnable()
     {
         mInfos.Speed = mInitSpeed;
+        path.Clear();
+        Pattern1();
 
-        mLeftFlag = true;
+        Start();
     }
 
-    void Update ()
+
+    void Start()
     {
-        EnemyMove();
+        iTween.MoveTo(gameObject, iTween.Hash("path", path.ToArray(), "easetype", iTween.EaseType.linear,
+                                              "time", 3f, "oncomplete", "PatternStop"));
     }
 
-    void EnemyMove()
+    void Pattern1()
     {
-        switch (mPattern)
+        if (gameObject.transform.position.y > 2.25)
         {
-            case MovePattern.Left:
-                MoveLeft();
-                break;
-            case MovePattern.RunAWay:
-                MoveRunAWay();
-                break;
-        }
-    }
-
-    void MoveLeft()
-    {
-        transform.Translate(Vector2.left * mInfos.Speed * Time.deltaTime);
-    }
-
-    void MoveRunAWay()
-    {
-        if (mLeftFlag)
-        {
-            transform.Translate(new Vector2(Mathf.Cos(Mathf.PI * 2 * 190 / 360), Mathf.Sin(Mathf.PI * 2 * 190 / 360))
-                                * mInfos.Speed * Time.deltaTime);
+            path.Add(gameObject.transform.position);
+            path.Add(new Vector3(gameObject.transform.position.x-4f, transform.position.y - 1.125f, 0));
+            path.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 2.25f, 0));
         }
         else
         {
-            transform.Translate(new Vector2(Mathf.Cos(Mathf.PI * 2 * -10 / 360), Mathf.Sin(Mathf.PI * 2 * -10 / 360))
-                                * mInfos.Speed * Time.deltaTime);
+            path.Add(gameObject.transform.position);
+            path.Add(new Vector3(gameObject.transform.position.x - 4f, transform.position.y + 1.125f, 0));
+            path.Add(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 2.25f, 0));
         }
+    }
 
-        if (mLeftFlag)
-        {
-            mInfos.Speed -= 0.05f;
-        }
-        else
-        {
-            mInfos.Speed += 0.05f;
-        }
-        if (mInfos.Speed < 0)
-        {
-            mLeftFlag = false;
-        }
+    void PatternStop()
+    {
+        mEnemyCon.InActive();
     }
 }

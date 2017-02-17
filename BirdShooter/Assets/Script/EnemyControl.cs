@@ -72,7 +72,7 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
-    void InActive()
+    public void InActive()
     {
         gameObject.SetActive(false);
     }
