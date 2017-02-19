@@ -5,8 +5,6 @@ public class ZakoShotPattern : MonoBehaviour
 {
     float mNextFire;
     int mAngle;
-
-
     EnemyControl mEnemyCon;
     EnemyObjStruct mInfos;
 
@@ -27,6 +25,7 @@ public class ZakoShotPattern : MonoBehaviour
     void OnEnable()
     {
         mInfos = mEnemyCon.GetInfos();
+        mNextFire = Time.time + mInfos.BulletInfo.FireRate;
     }
 
     void ShootBullet()

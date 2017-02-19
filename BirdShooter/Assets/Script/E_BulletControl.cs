@@ -3,8 +3,6 @@ using System.Collections;
 
 public class E_BulletControl : MonoBehaviour
 {
-
-    public float mSpeed;
     public float mRotateSpeed;
     public float mTracking;
 

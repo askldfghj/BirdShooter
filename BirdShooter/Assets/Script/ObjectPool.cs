@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿    using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
 public class ObjectPool : MonoBehaviour {
 
-    public static ObjectPool mCurrent;
+    public static ObjectPool mCurrent; //pool 정보
 
     public GameObject mEnemyBulletObj;
     public GameObject mBasicBulletObj;
@@ -44,18 +44,19 @@ public class ObjectPool : MonoBehaviour {
         StartCoroutine(CreatePool());
     }
 
+    //코루틴
+    //풀 만들기
     IEnumerator CreatePool()
     {
         for (int i = 0; i < mEBulletAmount; i++)
         {
             GameObject enemybullet = (GameObject)Instantiate(mEnemyBulletObj);
 
-            enemybullet.transform.parent = mPool.transform; //[자식] obj_A -> [부모] Play_Obj 밑으로 생성하기
+            enemybullet.transform.parent = mPool.transform; //Pool오브젝트를 부모로 삼도록 한다.
 
-            //PoolObj -> obj에 저장
             enemybullet.SetActive(false);
             mEBullets.Add(enemybullet);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            //비활성후 리스트 추가
             yield return null;
         }
 
@@ -63,12 +64,12 @@ public class ObjectPool : MonoBehaviour {
         {
             GameObject basicbullet = (GameObject)Instantiate(mBasicBulletObj);
 
-            basicbullet.transform.parent = mPool.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
+            basicbullet.transform.parent = mPool.transform; 
 
-            //GomPoolObj -> obj에 저장
+            
             basicbullet.SetActive(false);
             mPBasics_1.Add(basicbullet);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
+            
             yield return null;
         }
 
@@ -76,12 +77,11 @@ public class ObjectPool : MonoBehaviour {
         {
             GameObject chasebullet = (GameObject)Instantiate(mChaseBulletObj);
 
-            chasebullet.transform.parent = mPool.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
+            chasebullet.transform.parent = mPool.transform; 
 
-            //GomPoolObj -> obj에 저장
+            
             chasebullet.SetActive(false);
             mPChases.Add(chasebullet);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
         }
         yield return null;
 
@@ -89,12 +89,11 @@ public class ObjectPool : MonoBehaviour {
         {
             GameObject zako = (GameObject)Instantiate(mZakoEnemyObj);
 
-            zako.transform.parent = mEnemySpawnParent.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
+            zako.transform.parent = mEnemySpawnParent.transform; 
 
-            //GomPoolObj -> obj에 저장
+            
             zako.SetActive(false);
             mZakos.Add(zako);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
             yield return null;
         }
 
@@ -102,12 +101,11 @@ public class ObjectPool : MonoBehaviour {
         {
             GameObject basicep = (GameObject)Instantiate(mBasicBulletEpObj);
 
-            basicep.transform.parent = mPool.transform; //[자식] obj_B -> [부모] Play_Obj 밑으로 생성하기
+            basicep.transform.parent = mPool.transform; 
 
-            //GomPoolObj -> obj에 저장
+            
             basicep.SetActive(false);
             mPBasicEps.Add(basicep);
-            // Instantiate로 그려지고 비활성화된 상태의 오브젝트를 PoolObjs에 차곡차곡 넣는다.
             yield return null;
         }
     }
@@ -120,58 +118,48 @@ public class ObjectPool : MonoBehaviour {
             //obj.SetActive 가 false면 실행 
             if (!mEBullets[i].activeInHierarchy)
             {
-                //GM의 CUBE_A()에서 넘어온 obj.SetActive(true)된 Cube_A 호출
+                //false되어있던 obj 리턴
                 return mEBullets[i];
             }
         }
         return null;
-        // PoolObjs에 prefab이 남아있지 않으면 null을 넘겨준다.
+        // 전부 true일경우 null 리턴
     }
 
     public GameObject GetPoolBasicBullet1()
     {
         for (int i = 0; i < mPBasics_1.Count; i++)
         {
-
-            //obj.SetActive 가 false면 실행 
             if (!mPBasics_1[i].activeInHierarchy)
             {
-                //GM의 CUBE_A()에서 넘어온 obj.SetActive(true)된 Cube_A 호출
                 return mPBasics_1[i];
             }
         }
         return null;
-        // PoolObjs에 prefab이 남아있지 않으면 null을 넘겨준다.
     }
 
     public GameObject GetPoolChaseBullet()
     {
         for (int i = 0; i < mPChases.Count; i++)
         {
-            //obj.SetActive 가 false면 실행 
             if (!mPChases[i].activeInHierarchy)
             {
-                //GM의 CUBE_A()에서 넘어온 obj.SetActive(true)된 Cube_A 호출
                 return mPChases[i];
             }
         }
         return null;
-        // PoolObjs에 prefab이 남아있지 않으면 null을 넘겨준다.
     }
 
     public GameObject GetPoolBasicBulletEp()
     {
         for (int i = 0; i < mPBasicEps.Count; i++)
         {
-            //obj.SetActive 가 false면 실행 
             if (!mPBasicEps[i].activeInHierarchy)
             {
-                //GM의 CUBE_A()에서 넘어온 obj.SetActive(true)된 Cube_A 호출
                 return mPBasicEps[i];
             }
         }
         return null;
-        // PoolObjs에 prefab이 남아있지 않으면 null을 넘겨준다.
     }
 
     public GameObject GetPoolZako()

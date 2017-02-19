@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class StageLoader : MonoBehaviour {
 
     public float mSpawnRate;
-    private float mNextSpawn;
+    public float mGroupSpawnRate;
+    private float mNextGroup;
     
     public GameObject mEnemy;
     public Transform mEnemySpawn;
@@ -13,7 +14,7 @@ public class StageLoader : MonoBehaviour {
 
     void Awake()
     {
-        mNextSpawn = 0;
+        mNextGroup = 0;
     }
 
 	// Use this for initialization
@@ -25,24 +26,43 @@ public class StageLoader : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        SpawnEnemy();
+        SpawnZakoGroup();
 	}
 
-    void SpawnEnemy()
+    //지정된 Rate 간격으로 Zako그룹을 스폰한다.
+    void SpawnZakoGroup()
     {
-        if (Time.time > mNextSpawn)
+        if (Time.time > mNextGroup)
         {
-            CreatZako();
-            mNextSpawn = Time.time + mSpawnRate;
+            StartCoroutine(ZakoGroup(5, 0.3f));
+            mNextGroup = Time.time + mGroupSpawnRate;
         }
     }
 
-    void CreatZako()
+    //코루틴
+    //many만큼의 Zako를 sec 간격으로 스폰
+    IEnumerator ZakoGroup(int many, float sec)
+    {
+        int count = 0;
+        Vector3 posi = new Vector3(10, Random.Range(0.12f, 4.33f), 0);
+        int pattern = Random.Range(0, 3);
+        while (count < many)
+        {
+            CreateZako(posi, pattern);
+            count++;
+            yield return new WaitForSeconds(sec);
+        }
+    }
+
+    //지정된 위치에 이동패턴을 지정해 Zako를 pool에서 active
+    void CreateZako(Vector3 posi, int pattern)
     {
         GameObject Zako = ObjectPool.mCurrent.GetPoolZako();
         if (Zako == null) return;
-        Zako.transform.position = new Vector3(10, Random.Range(0.12f, 4.33f), 0);
+        Zako.transform.position = posi;
         Zako.transform.rotation = transform.rotation;
+        ZakoMovePattern zm = Zako.GetComponent<ZakoMovePattern>();
+        zm.SetPattern(pattern);
         Zako.SetActive(true);
     }
 }

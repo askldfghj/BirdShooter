@@ -6,30 +6,19 @@ public class EnemyControl : MonoBehaviour {
 
     BoxCollider2D mBox2d;
     Animator mEnemyAni;
-    float mNextFire;
-
-    int mAngle;
+    
     float mHealth;
 
     bool mIsAngleUp;
-    bool goleft;
     public GameObject mItem;
-
-
-    float Speed;
 
     public EnemyObjStruct mInfos;
     void Awake()
     {
         mHealth = mInfos.Health;
         mIsAngleUp = true;
-        mAngle = 0;
-        mNextFire = 0;
-        Speed = 5;
         mEnemyAni = GetComponent<Animator>();
         mBox2d = GetComponent<BoxCollider2D>();
-
-        goleft = true;
     }
 	// Use this for initialization
 	void Start ()
@@ -58,9 +47,7 @@ public class EnemyControl : MonoBehaviour {
 
     void OnEnable()
     {
-        goleft = true;
         mInfos.Health = mHealth;
-        Speed = 5;
     }
 
     void FixedUpdate()
@@ -88,17 +75,17 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
-    void ChangeAngle()
-    {
-        if (mIsAngleUp)
-        {
-            mAngle += 7;
-        }
-        else
-        {
-            mAngle -= 7;
-        }
-    }
+    //void ChangeAngle()
+    //{
+    //    if (mIsAngleUp)
+    //    {
+    //        mAngle += 7;
+    //    }
+    //    else
+    //    {
+    //        mAngle -= 7;
+    //    }
+    //}
         
     void CreateItem()
     {
@@ -108,27 +95,27 @@ public class EnemyControl : MonoBehaviour {
         }
     }
 
-    void ShootBullet()
-    {
-        if (Time.time > mNextFire)
-        {
-            ChangeAngle();
-            if (mAngle >= 60)
-            {
-                mIsAngleUp = false;
-            }
-            else if (mAngle <= -60)
-            {
-                mIsAngleUp = true;
-            }
-            mNextFire = Time.time + mInfos.BulletInfo.FireRate;
-            GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
-            if (bullet == null) return;
-            bullet.transform.position = mInfos.SpawnTransf[0].position;
-            bullet.transform.rotation = Quaternion.Euler(0, 0, mAngle);
-            bullet.SetActive(true);
-        }
-    }
+    //void ShootBullet()
+    //{
+    //    if (Time.time > mNextFire)
+    //    {
+    //        ChangeAngle();
+    //        if (mAngle >= 60)
+    //        {
+    //            mIsAngleUp = false;
+    //        }
+    //        else if (mAngle <= -60)
+    //        {
+    //            mIsAngleUp = true;
+    //        }
+    //        mNextFire = Time.time + mInfos.BulletInfo.FireRate;
+    //        GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
+    //        if (bullet == null) return;
+    //        bullet.transform.position = mInfos.SpawnTransf[0].position;
+    //        bullet.transform.rotation = Quaternion.Euler(0, 0, mAngle);
+    //        bullet.SetActive(true);
+    //    }
+    //}
 
     void Damaged(float dam)
     {
