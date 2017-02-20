@@ -11,6 +11,7 @@ public class ObjectPool : MonoBehaviour {
     public GameObject mChaseBulletObj;
     public GameObject mBasicBulletEpObj;
     public GameObject mZakoEnemyObj;
+    public GameObject mNamedEnemyObj;
 
     public GameObject mPool;
     public GameObject mEnemySpawnParent;
@@ -20,12 +21,14 @@ public class ObjectPool : MonoBehaviour {
     public int mPChaseAmount = 10;
     public int mPBasicEpAmount = 10;
     public int mZakoEnemyAmount = 10;
+    public int mNamedEnemyAmount = 5;
 
     List<GameObject> mEBullets;
     List<GameObject> mPBasics_1;
     List<GameObject> mPChases;
     List<GameObject> mPBasicEps;
     List<GameObject> mZakos;
+    List<GameObject> mNameds;
 
     void Awake()
     {
@@ -40,6 +43,7 @@ public class ObjectPool : MonoBehaviour {
         mPChases = new List<GameObject>();
         mPBasicEps = new List<GameObject>();
         mZakos = new List<GameObject>();
+        mNameds = new List<GameObject>();
 
         StartCoroutine(CreatePool());
     }
@@ -94,6 +98,18 @@ public class ObjectPool : MonoBehaviour {
             
             zako.SetActive(false);
             mZakos.Add(zako);
+            yield return null;
+        }
+
+        for (int i = 0; i < mNamedEnemyAmount; i++)
+        {
+            GameObject named = (GameObject)Instantiate(mNamedEnemyObj);
+
+            named.transform.parent = mEnemySpawnParent.transform;
+
+
+            named.SetActive(false);
+            mNameds.Add(named);
             yield return null;
         }
 
@@ -169,6 +185,18 @@ public class ObjectPool : MonoBehaviour {
             if (!mZakos[i].activeInHierarchy)
             {
                 return mZakos[i];
+            }
+        }
+        return null;
+    }
+
+    public GameObject GetPoolNamed()
+    {
+        for (int i = 0; i < mNameds.Count; i++)
+        {
+            if (!mNameds[i].activeInHierarchy)
+            {
+                return mNameds[i];
             }
         }
         return null;

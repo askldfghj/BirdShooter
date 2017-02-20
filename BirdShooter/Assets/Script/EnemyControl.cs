@@ -8,15 +8,14 @@ public class EnemyControl : MonoBehaviour {
     Animator mEnemyAni;
     
     float mHealth;
-
-    bool mIsAngleUp;
     public GameObject mItem;
 
     public EnemyObjStruct mInfos;
+
+    
     void Awake()
     {
         mHealth = mInfos.Health;
-        mIsAngleUp = true;
         mEnemyAni = GetComponent<Animator>();
         mBox2d = GetComponent<BoxCollider2D>();
     }
@@ -29,19 +28,6 @@ public class EnemyControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        //EnemyMove(); //공통아님
-        //if (goleft)
-        //{
-        //    Speed -= 0.05f;
-        //}
-        //else
-        //{
-        //    Speed += 0.05f;
-        //}
-        //if (Speed < 0)
-        //{
-        //    goleft = false;
-        //}
         CheckPosi();
     }
 
@@ -74,18 +60,6 @@ public class EnemyControl : MonoBehaviour {
             InActive();
         }
     }
-
-    //void ChangeAngle()
-    //{
-    //    if (mIsAngleUp)
-    //    {
-    //        mAngle += 7;
-    //    }
-    //    else
-    //    {
-    //        mAngle -= 7;
-    //    }
-    //}
         
     void CreateItem()
     {
@@ -94,28 +68,6 @@ public class EnemyControl : MonoBehaviour {
             Instantiate(mItem, transform.position, transform.rotation);
         }
     }
-
-    //void ShootBullet()
-    //{
-    //    if (Time.time > mNextFire)
-    //    {
-    //        ChangeAngle();
-    //        if (mAngle >= 60)
-    //        {
-    //            mIsAngleUp = false;
-    //        }
-    //        else if (mAngle <= -60)
-    //        {
-    //            mIsAngleUp = true;
-    //        }
-    //        mNextFire = Time.time + mInfos.BulletInfo.FireRate;
-    //        GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
-    //        if (bullet == null) return;
-    //        bullet.transform.position = mInfos.SpawnTransf[0].position;
-    //        bullet.transform.rotation = Quaternion.Euler(0, 0, mAngle);
-    //        bullet.SetActive(true);
-    //    }
-    //}
 
     void Damaged(float dam)
     {

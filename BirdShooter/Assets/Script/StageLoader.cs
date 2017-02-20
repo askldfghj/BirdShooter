@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class StageLoader : MonoBehaviour {
-
-    public float mSpawnRate;
-    public float mGroupSpawnRate;
-    private float mNextGroup;
     
-    public GameObject mEnemy;
+    public float mGroupSpawnRate;
+    public float mNamedSpawnRate;
+    private float mNextGroup;
+    private float mNextNamed;
+    
     public Transform mEnemySpawn;
     
 
     void Awake()
     {
         mNextGroup = 0;
+        mNextNamed = 0;
     }
 
 	// Use this for initialization
@@ -27,6 +28,7 @@ public class StageLoader : MonoBehaviour {
 	void Update ()
     {
         SpawnZakoGroup();
+        SpawnNamed();
 	}
 
     //지정된 Rate 간격으로 Zako그룹을 스폰한다.
@@ -36,6 +38,15 @@ public class StageLoader : MonoBehaviour {
         {
             StartCoroutine(ZakoGroup(5, 0.3f));
             mNextGroup = Time.time + mGroupSpawnRate;
+        }
+    }
+
+    void SpawnNamed()
+    {
+        if (Time.time > mNextNamed)
+        {
+            CreateNamed(new Vector3(10, 2.25f, 0), Random.Range(0, 2));
+            mNextNamed = Time.time + mNamedSpawnRate;
         }
     }
 
@@ -64,5 +75,16 @@ public class StageLoader : MonoBehaviour {
         ZakoMovePattern zm = Zako.GetComponent<ZakoMovePattern>();
         zm.SetPattern(pattern);
         Zako.SetActive(true);
+    }
+
+    void CreateNamed(Vector3 posi, int pattern)
+    {
+        GameObject Named = ObjectPool.mCurrent.GetPoolNamed();
+        if (Named == null) return;
+        Named.transform.position = posi;
+        Named.transform.rotation = transform.rotation;
+        NamedMovePattern nm = Named.GetComponent<NamedMovePattern>();
+        nm.SetPattern(pattern);
+        Named.SetActive(true);
     }
 }
