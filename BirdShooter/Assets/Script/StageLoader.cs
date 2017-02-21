@@ -28,7 +28,7 @@ public class StageLoader : MonoBehaviour {
 	void Update ()
     {
         SpawnZakoGroup();
-        SpawnNamed();
+        //SpawnNamed();
 	}
 
     //지정된 Rate 간격으로 Zako그룹을 스폰한다.
@@ -77,6 +77,8 @@ public class StageLoader : MonoBehaviour {
         Zako.SetActive(true);
     }
 
+
+    //자코와 같은 방식으로 네임드 스폰
     void CreateNamed(Vector3 posi, int pattern)
     {
         GameObject Named = ObjectPool.mCurrent.GetPoolNamed();

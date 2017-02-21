@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class ZakoMovePattern : MonoBehaviour {
@@ -8,7 +9,7 @@ public class ZakoMovePattern : MonoBehaviour {
     EnemyObjStruct mInfos;
 
     EnemyControl mEnemyCon;
-
+    ZakoShotPattern mShotcon;
     enum MovePattern { Left = 0, RunAWay = 1, ZigZag = 2 };
 
     MovePattern mPattern;
@@ -26,6 +27,7 @@ public class ZakoMovePattern : MonoBehaviour {
         mIsUp = false;
         path = new List<Vector3>();
         mEnemyCon = GetComponent<EnemyControl>();
+        mShotcon = GetComponent<ZakoShotPattern>();
         mInfos = mEnemyCon.GetInfos();
         mInitSpeed = mInfos.Speed;
         mIsCreate = false;
@@ -75,7 +77,14 @@ public class ZakoMovePattern : MonoBehaviour {
         //GoLeft
         path.Add(gameObject.transform.position);
         path.Add(InVector(-1f, gameObject.transform.position.y, 0));
+        StartCoroutine(Pattern0Shot(1f));
         PatternStart(3f);
+    }
+
+    IEnumerator Pattern0Shot(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        StartShot(1);
     }
 
     void Pattern1()
@@ -93,7 +102,15 @@ public class ZakoMovePattern : MonoBehaviour {
             path.Add(InVector(gameObject.transform.position.x - 4f, transform.position.y + 1.125f, 0));
             path.Add(InVector(gameObject.transform.position.x, gameObject.transform.position.y + 2.25f, 0));
         }
+        StartCoroutine(Pattern1Shot(2.5f / 2f));
         PatternStart(2.5f);
+        
+    }
+
+    IEnumerator Pattern1Shot(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        StartShot(Random.Range(0,2));
     }
 
     void Pattern2()
@@ -121,6 +138,7 @@ public class ZakoMovePattern : MonoBehaviour {
 
     void ZigZag2()
     {
+        StartShot(Random.Range(0,2));
         path.Clear();
         path.Add(gameObject.transform.position);
         path.Add(InVector(-1f, gameObject.transform.position.y, 0));
@@ -155,5 +173,10 @@ public class ZakoMovePattern : MonoBehaviour {
         mVec.y = y;
         mVec.z = z;
         return mVec;
+    }
+
+    void StartShot(int index)
+    {
+        mShotcon.StartPattern(index);
     }
 }

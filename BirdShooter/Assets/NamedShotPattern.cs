@@ -16,13 +16,10 @@ public class NamedShotPattern : MonoBehaviour
     enum ShotPattern { Scatter = 0 };
     ShotPattern mPattern;
 
-    bool mIsCreate;
-
     void Awake()
     {
         mAngle = 0f;
         mIsAngleUp = true;
-        mIsCreate = false;
         mEnemyCon = GetComponent<EnemyControl>();
         mInfos = mEnemyCon.GetInfos();
     }
