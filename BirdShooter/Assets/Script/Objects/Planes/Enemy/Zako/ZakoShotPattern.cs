@@ -27,7 +27,7 @@ public class ZakoShotPattern : MonoBehaviour
 
     }
 
-    void Pattern0(float rate)
+    void Pattern0()
     {
             GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
             if (bullet != null)
@@ -38,7 +38,7 @@ public class ZakoShotPattern : MonoBehaviour
             }
     }
 
-    void Pattern1(float rate)
+    void Pattern1()
     {
             GameObject bullet = ObjectPool.mCurrent.GetPoolEnemyBullet();
             float angle;
@@ -54,16 +54,19 @@ public class ZakoShotPattern : MonoBehaviour
             }
     }
 
-    public void StartPattern(int index)
+    public void SetPattern(int shotpattern)
     {
-        mPattern = (ShotPattern)index;
+        mPattern = (ShotPattern)shotpattern;
+    }
+    public void StartPattern()
+    {
         switch (mPattern)
         {
             case ShotPattern.Left:
-                Pattern0(mInfos.BulletInfo.FireRate);
+                Pattern0();
                 break;
             case ShotPattern.Chase:
-                Pattern1(mInfos.BulletInfo.FireRate);
+                Pattern1();
                 break;
         }
     }

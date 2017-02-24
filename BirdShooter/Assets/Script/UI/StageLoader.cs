@@ -56,24 +56,25 @@ public class StageLoader : MonoBehaviour {
     {
         int count = 0;
         Vector3 posi = new Vector3(10, Random.Range(0.12f, 4.33f), 0);
-        int pattern = Random.Range(0, 3);
+        int movepattern = Random.Range(0, 3);
+        int shotpattern = Random.Range(0, 2);
         while (count < many)
         {
-            CreateZako(posi, pattern);
+            CreateZako(posi, movepattern, shotpattern);
             count++;
             yield return new WaitForSeconds(sec);
         }
     }
 
     //지정된 위치에 이동패턴을 지정해 Zako를 pool에서 active
-    void CreateZako(Vector3 posi, int pattern)
+    void CreateZako(Vector3 posi, int movepattern, int shotpattern)
     {
         GameObject Zako = ObjectPool.mCurrent.GetPoolZako();
         if (Zako == null) return;
         Zako.transform.position = posi;
         Zako.transform.rotation = transform.rotation;
         ZakoMovePattern zm = Zako.GetComponent<ZakoMovePattern>();
-        zm.SetPattern(pattern);
+        zm.SetPattern(movepattern, shotpattern);
         Zako.SetActive(true);
     }
 

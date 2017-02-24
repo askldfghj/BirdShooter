@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
 
-    public Boundary mBoundary;
+    
     GameObject mLineLaser;
     Animator mPlayerAni;
     float mNextFire;
@@ -100,8 +100,8 @@ public class PlayerControl : MonoBehaviour {
     {
         transform.position = new Vector3
         (
-            Mathf.Clamp(transform.position.x, mBoundary.xMin, mBoundary.xMax),
-            Mathf.Clamp(transform.position.y, mBoundary.yMin, mBoundary.yMax),
+            Mathf.Clamp(transform.position.x, mInfos.Bound.xMin, mInfos.Bound.xMax),
+            Mathf.Clamp(transform.position.y, mInfos.Bound.yMin, mInfos.Bound.yMax),
             0
         );
     }

@@ -110,7 +110,7 @@ public class ZakoMovePattern : MonoBehaviour {
     IEnumerator Pattern1Shot(float sec)
     {
         yield return new WaitForSeconds(sec);
-        StartShot(Random.Range(0,2));
+        StartShot();
     }
 
     void Pattern2()
@@ -138,7 +138,7 @@ public class ZakoMovePattern : MonoBehaviour {
 
     void ZigZag2()
     {
-        StartShot(Random.Range(0,2));
+        StartShot();
         path.Clear();
         path.Add(gameObject.transform.position);
         path.Add(InVector(-1f, gameObject.transform.position.y, 0));
@@ -162,9 +162,10 @@ public class ZakoMovePattern : MonoBehaviour {
         mEnemyCon.InActive();
     }
 
-    public void SetPattern(int index)
+    public void SetPattern(int movepattern, int shotpattern)
     {
-        mPattern = (MovePattern)index;
+        mPattern = (MovePattern)movepattern;
+        mShotcon.SetPattern(shotpattern);
     }
 
     Vector3 InVector(float x, float y, float z)
@@ -175,8 +176,14 @@ public class ZakoMovePattern : MonoBehaviour {
         return mVec;
     }
 
-    void StartShot(int index)
+    void StartShot()
     {
-        mShotcon.StartPattern(index);
+        mShotcon.StartPattern();
+    }
+
+    void StartShot(int shotpattern)
+    {
+        mShotcon.SetPattern(shotpattern);
+        mShotcon.StartPattern();
     }
 }
