@@ -151,4 +151,9 @@ public class NamedMovePattern : MonoBehaviour
     {
         mShotcon.StartPattern(0);
     }
+
+    void OnDisable()
+    {
+        CancelInvoke();
+    }
 }
