@@ -201,4 +201,33 @@ public class ObjectPool : MonoBehaviour {
         }
         return null;
     }
+
+    public void Dispose()
+    {
+        int i;
+        for (i = mEBullets.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+        for (i = mPBasics_1.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+        for (i = mPChases.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+        for (i = mPBasicEps.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+        for (i = mZakos.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+        for (i = mNameds.Count - 1; i >= 0; i--)
+        {
+            Destroy(mEBullets[i]);
+        }
+    }
 }

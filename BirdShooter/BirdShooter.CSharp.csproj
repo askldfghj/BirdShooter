@@ -210,6 +210,9 @@
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
+    <None Include="Assets\Resource\Font\8bit_wonder\8-BIT WONDER.TXT" />
+    <None Include="Assets\Resource\Font\8bit_wonder\README.TXT" />
+    <None Include="Assets\Resource\Font\distant_stroke\READ ME.txt" />
     <None Include="Assets\Sprite Pack\Tap and Fly\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

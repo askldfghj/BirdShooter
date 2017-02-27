@@ -10,10 +10,12 @@ public class PlayerControl : MonoBehaviour {
     float mNextFire;
     float mNextChase;
     float mNextLaser;
+    float mHealth;
     int mPowerIndex;
     bool mIsFirePush;
 
     public PlayerObjStruct mInfos;
+    public UISprite mMyheart;
 
     enum BulletStyle { Basic, Laser }
     enum BasicBulletStyle { oneway, threeway }
@@ -33,6 +35,7 @@ public class PlayerControl : MonoBehaviour {
     void Awake()
     {
         mIsFirePush = false;
+        mHealth = mInfos.Health;
         mNextFire = 0;
         mNextLaser = 0;
         mPowerIndex = 0;
@@ -109,6 +112,8 @@ public class PlayerControl : MonoBehaviour {
     void PlayerHit()
     {
         mPlayerAni.SetTrigger("PlayerHit");
+        mHealth--;
+        mMyheart.fillAmount = mHealth / mInfos.Health;
         mInfos.Invincible = true;
         mBoxcollider.enabled = false;
         StartCoroutine(ColliderDisable());
@@ -196,6 +201,8 @@ public class PlayerControl : MonoBehaviour {
         bullet.SetActive(true);
     }
 
+    
+
     void InputProgress()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -268,5 +275,10 @@ public class PlayerControl : MonoBehaviour {
             yield return new WaitForSeconds(0.05f);
         }
         mRender.enabled = true;
+    }
+
+    public float GetHealth()
+    {
+        return mHealth;
     }
 }

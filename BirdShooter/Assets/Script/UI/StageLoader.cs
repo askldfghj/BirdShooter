@@ -8,8 +8,12 @@ public class StageLoader : MonoBehaviour {
     public float mNamedSpawnRate;
     private float mNextGroup;
     private float mNextNamed;
-    
+    private int mDistance;
+
+    PlayerControl mPlayerinfo;
+
     public Transform mEnemySpawn;
+    public UILabel mDistanceLabel;
     
     public int count;
 
@@ -17,12 +21,14 @@ public class StageLoader : MonoBehaviour {
     {
         mNextGroup = 0;
         mNextNamed = 0;
+        mDistance = 0;
+        mPlayerinfo = GameObject.Find("Player").GetComponent<PlayerControl>();
     }
 
 	// Use this for initialization
 	void Start ()
     {
-	
+	    StartCoroutine(RenewalDistance());
 	}
 	
 	// Update is called once per frame
@@ -31,6 +37,11 @@ public class StageLoader : MonoBehaviour {
         SpawnZakoGroup();
         SpawnNamed();
 	}
+
+    void FixedUpdate()
+    {
+        CheckOver();
+    }
 
     //지정된 Rate 간격으로 Zako그룹을 스폰한다.
     void SpawnZakoGroup()
@@ -89,5 +100,30 @@ public class StageLoader : MonoBehaviour {
         NamedMovePattern nm = Named.GetComponent<NamedMovePattern>();
         nm.SetPattern(pattern);
         Named.SetActive(true);
+    }
+
+    void CheckOver()
+    {
+        if (mPlayerinfo.GetHealth() <= 0)
+        {
+            PoolDispose();
+            Application.LoadLevel("Result");
+        }
+    }
+
+    IEnumerator RenewalDistance()
+    {
+        WaitForSeconds sec = new WaitForSeconds(1f);
+        while (true)
+        {
+            mDistanceLabel.text = mDistance.ToString();
+            mDistance++;
+            yield return sec;
+        }
+    }
+
+    void PoolDispose()
+    {
+        ObjectPool.mCurrent.Dispose();
     }
 }
